@@ -1540,19 +1540,6 @@ components:
           description: PIN offset
           format: int32
           example: 9999
-    ErrorFiserVDetailsResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        description:
-          type: string
-    ErrorFiserVResponse:
-      type: object
-      properties:
-        errorResponse:
-          $ref: '#/components/schemas/ErrorFiserVDetailsResponse'
     FeePinBlockData:
       type: object
       properties:
@@ -1584,6 +1571,19 @@ components:
       properties:
         fee:
           $ref: '#/components/schemas/FeePinBlockData'
+    ErrorFiserVDetailsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        description:
+          type: string
+    ErrorFiserVResponse:
+      type: object
+      properties:
+        errorResponse:
+          $ref: '#/components/schemas/ErrorFiserVDetailsResponse'
     VirtualCardRequest:
       required:
         - bankBranch
@@ -3244,7 +3244,7 @@ components:
           maxLength: 5
           type: string
           description: Informa el código de retorno de la operación realizada.
-          example: '+1137'
+          example: '+0000'
         message:
           maxLength: 200
           type: string
