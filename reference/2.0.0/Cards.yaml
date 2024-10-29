@@ -27,6 +27,7 @@
 # are granted or extended by this work or
 # the delivery of this work
 ################################################################################
+
 openapi: 3.0.1
 info:
   title: Silvercore™ Cards Service - API Documentation
@@ -749,7 +750,7 @@ paths:
         La presente API realiza la consulta inicial que reporta el ESTADO de la tarjeta (Pausada / No Pausada / Bloqueada 
         por otros motivos) que luego permitirá habilitar al cliente para la acción a tomar (ON / OFF).
         A nivel interno, se permite Pausar o Despausar la transaccionalidad de cualquier tarjeta, mediante 
-        boletinamiento 84. </br></br><b>Ejemplos de respuesta de la API </b> </br></br>▪ Tarjeta con boletín 84 </br>{ </br> "code": "+0000", </br> "message": "Tarjeta PAUSADA" </br>} </br>▪ Tarjeta sin boletín </br>{ </br> "code": "+1137", </br> "message": "Tarjeta NO PAUSADA" </br>} </br>▪ Tarjeta con boletín distinto a 84 </br>{ </br> "code": "+0000", </br> "message": "9 - Tarjeta Bloqueada" </br>} </br>{ </br> "code": "+0000", </br> "message": "7 - Tarjeta Bloqueada" </br>} </br>{ </br> "code": "+0000", </br> "message": "81 - Tarjeta Bloqueada" </br>} </br></br><b>Posibles casos de respuesta </b> </br></br><table BORDER style="border-collapse: collapse; text-align: center;"><tr BORDER><th BORDER>Caso</th><th BORDER>Respuesta de la API</th><th BORDER>Acción posible</th></tr BORDER><tr><td>Tarjeta sin boletín</td><td>“Tarjeta NO PAUSADA”</td><td>Puede pausar con la API cards/onOff</td></tr><tr BORDER><td>Tarjeta con boletín 84 (pausado)</td><td>“Tarjeta PAUSADA”</td><td>Puede despausar con la API cards/onOff</td></tr><tr BORDER><td>Tarjeta en otro boletín distinto a 84</td><td>Código de Boletín - “Tarjeta Bloqueada”</td><td>No puede pausar ni bajar el bloqueo con la API cards/onOff</td></tr></table>
+        boletinamiento 84. </br></br><b>Ejemplos de respuesta de la API </b> </br></br>▪ Tarjeta con boletín 84 </br>{ </br> "code": "+0000", </br> "message": "Tarjeta PAUSADA" </br>} </br>▪ Tarjeta sin boletín </br>{ </br> "code": "+0000", </br> "message": "Tarjeta NO PAUSADA" </br>} </br>▪ Tarjeta con boletín distinto a 84 </br>{ </br> "code": "+0000", </br> "message": "9 - Tarjeta Bloqueada" </br>} </br>{ </br> "code": "+0000", </br> "message": "7 - Tarjeta Bloqueada" </br>} </br>{ </br> "code": "+0000", </br> "message": "81 - Tarjeta Bloqueada" </br>} </br></br><b>Posibles casos de respuesta </b> </br></br><table BORDER style="border-collapse: collapse; text-align: center;"><tr BORDER><th BORDER>Caso</th><th BORDER>Respuesta de la API</th><th BORDER>Acción posible</th></tr BORDER><tr><td>Tarjeta sin boletín</td><td>“Tarjeta NO PAUSADA”</td><td>Puede pausar con la API cards/onOff</td></tr><tr BORDER><td>Tarjeta con boletín 84 (pausado)</td><td>“Tarjeta PAUSADA”</td><td>Puede despausar con la API cards/onOff</td></tr><tr BORDER><td>Tarjeta en otro boletín distinto a 84</td><td>Código de Boletín - “Tarjeta Bloqueada”</td><td>No puede pausar ni bajar el bloqueo con la API cards/onOff</td></tr></table>
       operationId: getCardStatus
       parameters:
         - name: Authorization
