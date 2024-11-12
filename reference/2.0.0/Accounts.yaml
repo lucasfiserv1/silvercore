@@ -36,11 +36,298 @@ servers:
   - url: https://int.api.firstdata.com/latam-gfs-apis/
     description: Sandbox Test
 paths:
+  /accounts/v1/statementFlag:
+    put:
+      tags:
+        - Monthly Summary
+      summary: >-
+        Esta API permite actualizar la información relacionada al servicio de
+        resumen electrónico.
+      operationId: updateSubscriptionMonthlySummary
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummaryModifyRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            '*/*':
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Update Subcription
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
+    post:
+      tags:
+        - Monthly Summary
+      summary: Esta API permite subscribirse al servicio de resumen electrónico.
+      operationId: createSubscriptionMonthlySummary
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummarySubscribeRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            '*/*':
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Subscription
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
+    delete:
+      tags:
+        - Monthly Summary
+      summary: Esta API permite desubscribirse al servicio de resumen electrónico.
+      operationId: deleteSubscriptionMonthlySummary
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummaryUnsubscribeRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            '*/*':
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Unsubscribe
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
   /accounts/tripLog:
     put:
       tags:
         - TripLog
-      summary: Posibilita generar la carga de un nuevo viaje para uno o varios integrantes de la cuenta. Además, ejecuta Bajas o Modificaciones de uno o varios avisos de viaje previamente cargado. El emisor armara el PUT con los datos que obtiene originalmente de la Consulta de Viajes ofreciendo al cliente la gestión sobre alguno de ellos.
+      summary: >-
+        Posibilita generar la carga de un nuevo viaje para uno o varios
+        integrantes de la cuenta. Además, ejecuta Bajas o Modificaciones de uno
+        o varios avisos de viaje previamente cargado. El emisor armara el PUT
+        con los datos que obtiene originalmente de la Consulta de Viajes
+        ofreciendo al cliente la gestión sobre alguno de ellos.
       operationId: putTripLog
       parameters:
         - name: Authorization
@@ -67,13 +354,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -139,7 +430,9 @@ paths:
     post:
       tags:
         - TripLog
-      summary: Permite listar los viajes previamente cargados, históricos, vigentes y futuros.
+      summary: >-
+        Permite listar los viajes previamente cargados, históricos, vigentes y
+        futuros.
       operationId: getTripLog
       parameters:
         - name: Authorization
@@ -166,13 +459,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -239,7 +536,9 @@ paths:
     post:
       tags:
         - Annual Summary
-      summary: Permite obtener de forma detallada y consolidada, los datos sobre intereses, comisiones y gastos que se han aplicado durante un año.
+      summary: >-
+        Permite obtener de forma detallada y consolidada, los datos sobre
+        intereses, comisiones y gastos que se han aplicado durante un año.
       operationId: dataAnnualSummary
       parameters:
         - name: Authorization
@@ -266,13 +565,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -335,6 +638,388 @@ paths:
       x-proxy-name: Annual Summary
       x-group-name: Annual Summary
       x-child-product-name: Accounts
+  /accounts/v1/summary:
+    post:
+      tags:
+        - Monthly Summary
+      summary: >-
+        Esta API permite consultar el estado de los últimos 12 resumenes
+        mensuales.
+      operationId: getListMonthlySummaries
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListMonthlySummariesRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMonthlySummariesResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Latest Monthly Summary
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
+  /accounts/v1/summary/data:
+    post:
+      tags:
+        - Monthly Summary
+      summary: Esta API permite consultar la informacón de un resumen mensual.
+      operationId: getMonthlySummaryData
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummaryDataRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonthlySummaryDataResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Data
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
+  /accounts/v1/statementFlag/status:
+    post:
+      tags:
+        - Monthly Summary
+      summary: >-
+        Esta API permite consultar el e/monthlySummary/subscription/stado de la
+        subscripción al servicio de resumen electrónico.
+      operationId: getStatusSubscriptionMonthlySummary
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummaryStatusRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonthlySummaryStatusResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Subscription Status
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
+  /accounts/v1/documentSummary:
+    post:
+      tags:
+        - Monthly Summary
+      summary: >-
+        Esta API permite la posibilidad de consultar el resumen mensual en
+        formato PDF codificado en base64.
+      operationId: downloadMonthlySummary
+      parameters:
+        - name: X-ClientID
+          in: header
+          description: Número que representa la entidad cliente del servicio en Fiserv.
+          required: true
+          schema:
+            pattern: '[0-9]{1,3}'
+            type: string
+            description: Número que representa la entidad cliente del servicio en Fiserv.
+        - name: username
+          in: header
+          description: Identificador que representa al usuario.
+          required: true
+          schema:
+            type: string
+            description: Identificador que representa al usuario.
+        - name: security-context
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: requestId
+          in: header
+          description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+          required: false
+          schema:
+            type: string
+            description: ' Identificador único global de la solicitud enviada con formato de dígitos hexadecimales con grupos separados por guiones. Ejemplo: b3d27f9b-d21d-327c-164e-7fb6776f87b0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonthlySummaryPDFRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonthlySummaryPDFResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reponse 1:
+                  description: Validation of required fields
+                  value:
+                    fieldName1: string
+                    fieldName2: string
+                Reponse 2:
+                  description: Mainframe message
+                  value:
+                    errorResponse:
+                      code: 0
+                      description: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetailsResponse'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFiserVResponse'
+      x-proxy-name: Download Summary
+      x-group-name: Monthly Summary
+      x-child-product-name: Accounts
   /accounts/v1/documentAnnualSummary:
     post:
       tags:
@@ -366,13 +1051,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -439,7 +1128,10 @@ paths:
     post:
       tags:
         - TripLog
-      summary: Permite la Baja o Borrado de todos los viajes previamente cargados. El emisor armara el DEL  ofreciendo al cliente la eliminación del histórico de  viajes previamente cargados.
+      summary: >-
+        Permite la Baja o Borrado de todos los viajes previamente cargados. El
+        emisor armara el DEL  ofreciendo al cliente la eliminación del histórico
+        de  viajes previamente cargados.
       operationId: deleteTripLog
       parameters:
         - name: Authorization
@@ -466,13 +1158,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -566,13 +1262,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -601,7 +1301,13 @@ paths:
     post:
       tags:
         - Cards
-      summary: La consulta lista todas las tarjetas en condiciones de operar, de manera de seleccionar sobre cual  de ellas se  solicitará la información para conformar la imagen de la tarjeta para que el cliente final pueda operar. Esta orientada a prevalidación de tarjeta vigentes ante posibles cambios en la numeración por reimpresiones/renovaciones y el posible solapamiento. La respuesta contiene el  PAN enmascarado.
+      summary: >-
+        La consulta lista todas las tarjetas en condiciones de operar, de manera
+        de seleccionar sobre cual  de ellas se  solicitará la información para
+        conformar la imagen de la tarjeta para que el cliente final pueda
+        operar. Esta orientada a prevalidación de tarjeta vigentes ante posibles
+        cambios en la numeración por reimpresiones/renovaciones y el posible
+        solapamiento. La respuesta contiene el  PAN enmascarado.
       operationId: getConsultaTarjetas
       parameters:
         - name: Authorization
@@ -628,13 +1334,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -701,7 +1411,14 @@ paths:
     post:
       tags:
         - Card Holders
-      summary: La consulta permite listar todos los componentes de una cuenta (Titular + Adicionales) de manera de seleccionar sobre cuál de ellos se solicitará la acción de ACTIVAR / BLOQUEAR / DENUNCIAR / REIMPRIMIR. Puede utilizarse como complemento de prevalidación de tarjeta ante posibles cambios en la numeración por reimpresiones/renovaciones y el posible solapamiento. La respuesta contiene el PAN enmascarado junto con más datos de los clientes listados.
+      summary: >-
+        La consulta permite listar todos los componentes de una cuenta (Titular
+        + Adicionales) de manera de seleccionar sobre cuál de ellos se
+        solicitará la acción de ACTIVAR / BLOQUEAR / DENUNCIAR / REIMPRIMIR.
+        Puede utilizarse como complemento de prevalidación de tarjeta ante
+        posibles cambios en la numeración por reimpresiones/renovaciones y el
+        posible solapamiento. La respuesta contiene el PAN enmascarado junto con
+        más datos de los clientes listados.
       operationId: getConsultaMiembros
       parameters:
         - name: Authorization
@@ -728,13 +1445,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       requestBody:
@@ -801,7 +1522,11 @@ paths:
     post:
       tags:
         - Availability
-      summary: Posibilita consultar la disponibilidad del servicio previo al uso de la API que realizará el input para generación de la nueva Cuenta/Tarjeta. Se recomienda la ejecución previa al consumo de la API /cards/instantIssuance
+      summary: >-
+        Posibilita consultar la disponibilidad del servicio previo al uso de la
+        API que realizará el input para generación de la nueva Cuenta/Tarjeta.
+        Se recomienda la ejecución previa al consumo de la API
+        /cards/instantIssuance
       operationId: getAvailability
       parameters:
         - name: Authorization
@@ -828,13 +1553,17 @@ paths:
           example: NVRuz4cyQyrHpyGwHTiHRAzJg9itrjei
         - name: Signature
           in: header
-          description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+          description: >-
+            Valida la firma HMAC enviada por el cliente mediante un algoritmo
+            incrustado en APIGEE.
           required: false
           schema:
             maxLength: 44
             minLength: 44
             type: string
-            description: Valida la firma HMAC enviada por el cliente mediante un algoritmo incrustado en APIGEE.
+            description: >-
+              Valida la firma HMAC enviada por el cliente mediante un algoritmo
+              incrustado en APIGEE.
             example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
           example: TMH815p9C0q9iq53yodLIbkjylnstn1JUFBEAjpVQ2A=
       responses:
@@ -903,35 +1632,7 @@ components:
           type: string
         detail:
           type: string
-    CountryRequest:
-      required:
-        - countryCode
-        - dateFrom
-        - dateTo
-      type: object
-      properties:
-        dateFrom:
-          maxLength: 10
-          minLength: 10
-          type: string
-          description: Este campo de entrada, proporciona la información correspondiente a la fecha de inicio del Aviso de Viaje
-          example: '2023-10-20'
-        dateTo:
-          maxLength: 10
-          minLength: 10
-          type: string
-          description: Este campo de entrada, proporciona la información correspondiente a la fecha de fin del Aviso de Viaje
-          example: '2023-11-02'
-        countryCode:
-          maxLength: 3
-          minLength: 3
-          type: string
-          description: Este campo de entrada, proporciona el dato del país destino del Aviso de Viaje
-          example: MEX
-      description: Este campo de entrada proporciona los datos de los registros de viajes
-    PutTripLogResponse:
-      required:
-        - countriesList
+    AccountRequestOnlyTitular:
       type: object
       properties:
         accountNumber:
@@ -939,30 +1640,66 @@ components:
           minLength: 32
           pattern: '[0-9A-F]{32}'
           type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
           example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
         additional:
           maxLength: 1
           minLength: 1
           type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valores posibles: 1 a 9. Titular: 0 Adicional: 1 a 9'
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valor posible
+            en esta API: 0. No se debe enviar valores de 1 a 9
           format: int32
           example: 0
+    MonthlySummaryModifyRequest:
+      type: object
+      properties:
         cardNumber:
-          maxLength: 64
-          minLength: 64
           pattern: '[0-9A-F]{64}'
           type: string
-          description: Este campo de entrada permite ingresar el número de tarjeta (PAN) encriptado
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
           example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
-        countriesList:
-          maxItems: 5
-          minItems: 5
-          type: array
-          description: Este campo de entrada proporciona los datos de los registros de viajes
-          items:
-            $ref: '#/components/schemas/CountryRequest'
-      description: Estructura de campos que responde a la API TripLog
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        email:
+          type: string
+          description: El email donde se enviará el resumen mensual
+          example: fiserv@example.com
+        encryptionPassword:
+          type: string
+          description: >-
+            Contraseña encriptada provista por el usuario que luego se asigna
+            como contraseña para el resumen en formato PDF que es enviado al
+            email declarado
+        foreignUse:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Indica si la actualización es para una
+            cuenta local o extranjera cuando no se proporciona
+            ORG.</br>Valores:</br></br>Espacio = Local;</br>0 = Local
+            (predeterminado);</br>1 = Extranjero;</br>2 = Ambos.
+          example: '0'
+        statementFlag:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Bandera de Estado de cuenta de la
+            Cuenta.</br>Valores:</br></br>Espacio = Declaración normal
+            (predeterminado)</br>0 = Código de retención de declaración definido
+            por el usuario 10</br>1–9 = Código de retención de declaración
+            definido por el usuario 1 a 9</br>I = Declaración provisional</br>H
+            = Mantener declaración</br>R = Declaración devuelta</br>S =
+            Declaración de cierre de sesión</br>O = Estado de cuenta en
+            línea/solo archivado</br>U = Suprimir declaración; no generar</br>Z
+            = Valor definido por el usuario que suprime la declaración
+            generación.
+          example: Z
     ErrorFiserVDetailsResponse:
       type: object
       properties:
@@ -976,6 +1713,81 @@ components:
       properties:
         errorResponse:
           $ref: '#/components/schemas/ErrorFiserVDetailsResponse'
+    CountryRequest:
+      required:
+        - countryCode
+        - dateFrom
+        - dateTo
+      type: object
+      properties:
+        dateFrom:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: >-
+            Este campo de entrada, proporciona la información correspondiente a
+            la fecha de inicio del Aviso de Viaje
+          example: '2023-10-20'
+        dateTo:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: >-
+            Este campo de entrada, proporciona la información correspondiente a
+            la fecha de fin del Aviso de Viaje
+          example: '2023-11-02'
+        countryCode:
+          maxLength: 3
+          minLength: 3
+          type: string
+          description: >-
+            Este campo de entrada, proporciona el dato del país destino del
+            Aviso de Viaje
+          example: MEX
+      description: Este campo de entrada proporciona los datos de los registros de viajes
+    PutTripLogResponse:
+      required:
+        - countriesList
+      type: object
+      properties:
+        accountNumber:
+          maxLength: 32
+          minLength: 32
+          pattern: '[0-9A-F]{32}'
+          type: string
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
+          example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
+        additional:
+          maxLength: 1
+          minLength: 1
+          type: integer
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valores
+            posibles: 1 a 9. Titular: 0 Adicional: 1 a 9
+          format: int32
+          example: 0
+        cardNumber:
+          maxLength: 64
+          minLength: 64
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        countriesList:
+          maxItems: 5
+          minItems: 5
+          type: array
+          description: >-
+            Este campo de entrada proporciona los datos de los registros de
+            viajes
+          items:
+            $ref: '#/components/schemas/CountryRequest'
+      description: Estructura de campos que responde a la API TripLog
     Account:
       type: object
       properties:
@@ -983,12 +1795,17 @@ components:
           maxLength: 1
           minLength: 1
           type: integer
-          description: Este campo de salida, proporciona el para identificar unívocamente Titulares y Adicionales de la misma. Conocido también como "AUTORIZADO"
+          description: >-
+            Este campo de salida, proporciona el para identificar unívocamente
+            Titulares y Adicionales de la misma. Conocido también como
+            "AUTORIZADO"
           format: int32
           example: 5
         countriesList:
           type: array
-          description: Este campo de salida, proporciona los datos de los registros de viajes
+          description: >-
+            Este campo de salida, proporciona los datos de los registros de
+            viajes
           items:
             $ref: '#/components/schemas/Country'
     Country:
@@ -998,39 +1815,27 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: Este campo de salida, proporciona la información correspondiente a la fecha de inicio del Aviso de Viaje
+          description: >-
+            Este campo de salida, proporciona la información correspondiente a
+            la fecha de inicio del Aviso de Viaje
           example: '2023-09-03'
         dateTo:
           maxLength: 10
           minLength: 10
           type: string
-          description: Este campo de salida, proporciona la información correspondiente a la fecha de fin del Aviso de Viaje
+          description: >-
+            Este campo de salida, proporciona la información correspondiente a
+            la fecha de fin del Aviso de Viaje
           example: '2023-09-05'
         countryCode:
           maxLength: 3
           minLength: 3
           type: string
-          description: Este campo de salida, proporciona el dato del país destino del Aviso de Viaje
+          description: >-
+            Este campo de salida, proporciona el dato del país destino del Aviso
+            de Viaje
           example: CUB
       description: Este campo de salida, proporciona los datos de los registros de viajes
-    AccountRequestOnlyTitular:
-      type: object
-      properties:
-        accountNumber:
-          maxLength: 32
-          minLength: 32
-          pattern: '[0-9A-F]{32}'
-          type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
-          example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
-        additional:
-          maxLength: 1
-          minLength: 1
-          type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valor posible en esta API: 0. No se debe enviar valores de 1 a 9'
-          format: int32
-          example: 0
-      description: Datos de la cuenta.
     DataAnnualRequest:
       type: object
       properties:
@@ -1039,7 +1844,9 @@ components:
           minLength: 64
           pattern: '[0-9A-F]{64}'
           type: string
-          description: Este campo de entrada permite ingresar el número de tarjeta (PAN) encriptado
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
           example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
         account:
           $ref: '#/components/schemas/AccountRequestOnlyTitular'
@@ -1069,21 +1876,21 @@ components:
     Amount:
       type: object
       properties:
-        localCurrency:
-          maxLength: 16
-          minLength: 1
+        value:
+          maxLength: 17
           type: string
-          description: Monto en moneda local. Peso argentino. 13 posiciones enteras, 2 posiciones decimales y separador decimal. Entre 0 y 9999999999999.99
-          format: decimal
-          example: '185000.99'
-        foreingCurrency:
-          maxLength: 16
-          minLength: 1
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Monto original de la transacción en
+            dolares.
+          example: '125'
+        formattedValue:
+          maxLength: 18
           type: string
-          description: Monto en USD Dolar. 13 posiciones enteras, 2 posiciones decimales y separador decimal. Entre 0 y 9999999999999.99
-          format: decimal
-          example: '185000.99'
-      description: Montos acumulados por moneda de impuestos.
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Monto original de la transacción en
+            dolares.
+          example: '125.0'
+      description: Exclusivo VisionPLUS.
     Benefit:
       type: object
       properties:
@@ -1103,7 +1910,9 @@ components:
           description: Nombre del comercio.
           items:
             $ref: '#/components/schemas/MerchantsList'
-      description: Lista los diferentes beneficios a los cuales el cliente tuvo acceso acorde a sus consumos.
+      description: >-
+        Lista los diferentes beneficios a los cuales el cliente tuvo acceso
+        acorde a sus consumos.
     BenefitList:
       type: object
       properties:
@@ -1133,7 +1942,9 @@ components:
           description: Agrupa consumos en Mes/Monto. Ocurre hasta 12 veces.
           items:
             $ref: '#/components/schemas/Total'
-      description: Contiene el total de consumos realizados por tarjeta (titular y adicionales). Ocurre hasta 10 veces.
+      description: >-
+        Contiene el total de consumos realizados por tarjeta (titular y
+        adicionales). Ocurre hasta 10 veces.
     CategoryConsumption:
       type: object
       properties:
@@ -1150,10 +1961,14 @@ components:
             $ref: '#/components/schemas/CategoryList'
         merchants:
           type: array
-          description: Lista de comercios con mayor consumo durante el periodo seleccionado. Ocurre hasta 5 veces.
+          description: >-
+            Lista de comercios con mayor consumo durante el periodo
+            seleccionado. Ocurre hasta 5 veces.
           items:
             $ref: '#/components/schemas/MerchantsList'
-      description: Contiene el total de consumos realizados por categoría (titular y adicionales). Ocurre hasta 10 veces.
+      description: >-
+        Contiene el total de consumos realizados por categoría (titular y
+        adicionales). Ocurre hasta 10 veces.
     CategoryList:
       type: object
       properties:
@@ -1174,27 +1989,37 @@ components:
       properties:
         cardConsumptions:
           type: array
-          description: Contiene el total de consumos realizados por tarjeta (titular y adicionales). Ocurre hasta 10 veces.
+          description: >-
+            Contiene el total de consumos realizados por tarjeta (titular y
+            adicionales). Ocurre hasta 10 veces.
           items:
             $ref: '#/components/schemas/CardConsumption'
         categoryConsumptions:
           type: array
-          description: Contiene el total de consumos realizados por categoría (titular y adicionales). Ocurre hasta 10 veces.
+          description: >-
+            Contiene el total de consumos realizados por categoría (titular y
+            adicionales). Ocurre hasta 10 veces.
           items:
             $ref: '#/components/schemas/CategoryConsumption'
         benefits:
           type: array
-          description: Lista los diferentes beneficios a los cuales el cliente tuvo acceso acorde a sus consumos.
+          description: >-
+            Lista los diferentes beneficios a los cuales el cliente tuvo acceso
+            acorde a sus consumos.
           items:
             $ref: '#/components/schemas/Benefit'
         retentions:
           type: array
-          description: Lista las diferentes retenciones aplicadas a la Cuenta en el periodo seleccionado. Ocurre hasta 12 veces.
+          description: >-
+            Lista las diferentes retenciones aplicadas a la Cuenta en el periodo
+            seleccionado. Ocurre hasta 12 veces.
           items:
             $ref: '#/components/schemas/Retention'
         taxes:
           type: array
-          description: Lista los diferentes impuestos aplicados a la Cuenta en el periodo seleccionado. Ocurre hasta 12 veces.
+          description: >-
+            Lista los diferentes impuestos aplicados a la Cuenta en el periodo
+            seleccionado. Ocurre hasta 12 veces.
           items:
             $ref: '#/components/schemas/Tax'
     MerchantsList:
@@ -1223,7 +2048,10 @@ components:
           maxLength: 16
           minLength: 1
           type: string
-          description: Refleja la base imponible igual al total de dólares de la cuenta expresado en moneda local al tipo de cambio del cierre de cuenta corriente correspondiente al mes. Entre 0 y 9999999999999.99.
+          description: >-
+            Refleja la base imponible igual al total de dólares de la cuenta
+            expresado en moneda local al tipo de cambio del cierre de cuenta
+            corriente correspondiente al mes. Entre 0 y 9999999999999.99.
           example: '433470.68'
         resolutionNumber:
           maxLength: 15
@@ -1233,7 +2061,9 @@ components:
           example: '16070389973'
         amount:
           $ref: '#/components/schemas/Amount'
-      description: Lista las diferentes retenciones aplicadas a la Cuenta en el periodo seleccionado. Ocurre hasta 12 veces.
+      description: >-
+        Lista las diferentes retenciones aplicadas a la Cuenta en el periodo
+        seleccionado. Ocurre hasta 12 veces.
     Tax:
       type: object
       properties:
@@ -1245,20 +2075,2736 @@ components:
           example: Impuesto País
         amount:
           $ref: '#/components/schemas/Amount'
-      description: Lista los diferentes impuestos aplicados a la Cuenta en el periodo seleccionado. Ocurre hasta 12 veces.
+      description: >-
+        Lista los diferentes impuestos aplicados a la Cuenta en el periodo
+        seleccionado. Ocurre hasta 12 veces.
     Total:
       type: object
       properties:
-        date:
-          maxLength: 7
-          minLength: 7
-          pattern: MM-YYYY
+        code:
+          maxLength: 13
           type: string
-          description: Fecha acumulado de consumos.
-          example: 01-2024
+          description: >-
+            Código que identifica a la clave del registro general, a saber:
+            </br></br>Valores: </br></br>00050 - 00001 = Pagos, </br>00050 -
+            00010 = Transferencias, </br>00050 - 00020 = Ajustes Débito con
+            Afectación Mes Anterior, </br>00050 - 00030 = Ajustes Crédito con
+            Afectación Mes Anterior, </br>00050 - 00040 = Saldo Pendiente,
+            </br>00050 - 00050 = Consumos del Mes, </br>00050 - 00060 = Total de
+            Cargos, </br>00050 - 00070 = Subtotal.
+          example: 00050 - 00010
+        codeDescription:
+          maxLength: 40
+          type: string
+          description: >-
+            Código que identifica a la clave del registro general, a saber:
+            </br></br>Valores: </br></br>00050 - 00001 = Pagos, </br>00050 -
+            00010 = Transferencias, </br>00050 - 00020 = Ajustes Débito con
+            Afectación Mes Anterior, </br>00050 - 00030 = Ajustes Crédito con
+            Afectación Mes Anterior, </br>00050 - 00040 = Saldo Pendiente,
+            </br>00050 - 00050 = Consumos del Mes, </br>00050 - 00060 = Total de
+            Cargos, </br>00050 - 00070 = Subtotal.
+          example: Pagos
+        adjustmentPaymentDate:
+          maxLength: 10
+          type: string
+          description: Fecha de pago de ajuste. Formato ISO 8601.
+          example: '2024-05-31'
+        description:
+          maxLength: 33
+          type: string
+          description: Descripción del movimiento.
+          example: SU PAGO
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Importe total en pesos. Formato -999999999999,99. Se informan
+            blancos a izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 10
+          type: string
+          description: >-
+            Importe total en dólares. Formato -999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999,99'
+        allocated:
+          $ref: '#/components/schemas/Allocated'
+      description: Datos consolidados del resumen.
+    ListMonthlySummariesRequest:
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+    DataMonthlySummary:
+      type: object
+      properties:
+        id:
+          maxLength: 15
+          type: string
+          description: El Id es el número del resumen asignado en la base de datos.
+          example: '16547'
+        statementDate:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: >-
+            Fecha de cierre de cuenta corriente en formato yyyy-MM-dd (ISO
+            8601).
+          example: '2024-07-15'
+        statusId:
+          maxLength: 256
+          type: string
+          description: Estatus del identificador (Id).
+      description: Lista los resumenes disponibles de acuerdo a la consulta.
+    ListMonthlySummariesResponse:
+      type: object
+      properties:
+        summaries:
+          type: array
+          description: Lista los resumenes disponibles de acuerdo a la consulta.
+          items:
+            $ref: '#/components/schemas/DataMonthlySummary'
+    Code:
+      type: object
+      properties:
+        id:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '5'
+        value:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS.</br>Código de usuario.
+          example: '123456789'
+      description: Exclusivo VisionPLUS.</br>Información del código.
+    Date:
+      type: object
+      properties:
+        id:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '5'
+        value:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS.</br>Fecha de usuario.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+      description: 'Exclusivo VisionPLUS.</br>Información de fecha. Tamaño de la lista: 5'
+    MonthlySummaryDataRequest:
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        statementDate:
+          maxLength: 10
+          minLength: 10
+          pattern: yyyy-MM-dd
+          type: string
+          description: >-
+            La fecha de cierre del resumen mensual. esta fecha debera tener el
+            formato yyyy-MM-dd.
+          example: '2024-05-31'
+        transaction:
+          $ref: '#/components/schemas/TransactionSummaryRequest'
+        organizationNumber:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El campo OrganizationNumber es un atributo
+            que contiene el número de identificación único asignado a una
+            organización dentro de la API.
+          example: '998'
+        keyword:
+          maxLength: 20
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El campo de palabra clave se utiliza para
+            buscar la descripción de la transacción.
+          example: user's_keyword
+        startToken:
+          maxLength: 26
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El campo startToken es el token generado
+            para que la API comprenda el siguiente conjunto de transacciones que
+            se recuperarán.
+          example: 177100079202316ES000000013
+        queryMoreTransactions:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>El campo queryMoreTransactions se
+            utiliza cuando se completa el campo "startToken" para obtener más
+            transacciones.</br></br>Valores:</br></br>N = Próximas
+            transacciones;</br>P = Transacciones anteriores.
+          example: 'N'
+        serviceType:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Tipo de
+            servicio.</br></br>Valores:</br></br>S = Detalle del estado de
+            cuenta</br>M = Detalle mensual
+          example: S
+        foreignIndicator:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de doble
+            moneda</br></br>Valores:</br></br>Espacios o L = Cuenta local</br>F
+            = Cuenta extranjera
+          example: L
+        statement:
+          $ref: '#/components/schemas/StatementSummaryRequest'
+        user:
+          $ref: '#/components/schemas/UserSummaryRequest'
+        isMerchantInformationRequired:
+          maxLength: 4
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>El campo
+            isMerchantInformationRequired indica si la información del
+            comerciante es obligatoria o no.</br></br>Valores:</br></br>false =
+            No se requiere información del comerciante;</br>true = Se requiere
+            información del comerciante.
+          example: true
+        isForeing:
+          maxLength: 1
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>El campo isForeign se proporciona en
+            el mensaje de entrada para que la fuente solicitante pueda
+            especificar si la solicitud se aplica a la cuenta local o extranjera
+            cuando la cuenta está en una organización de procesamiento de doble
+            moneda. El valor predeterminado es la cuenta
+            local.</br></br>Valores:</br></br>false = Cuenta local;</br>true =
+            Cuenta extranjera.
+    StatementSummaryRequest:
+      type: object
+      properties:
+        date:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha de estado de cuenta (en ISO 8601).
+            Fecha gregoriana: formato CCAAMMDD.
+          example: '2023-06-01'
+        monthsNumber:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br>Número de meses del estado de cuenta.
+          example: '10'
+      description: Exclusivo VisionPLUS.</br>Información del estado de cuenta.
+    TransactionAmountRange:
+      type: object
+      properties:
+        from:
+          maxLength: 16
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Rango de monto inicial de la transacción.
+            Formato: 9999999999999.99.
+          example: '928374.23'
+        to:
+          maxLength: 16
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Rango de monto "hasta" de la transacción.
+            Formato: 9999999999999.99.
+          example: '2.83756392391E9'
+      description: >-
+        Exclusivo VisionPLUS.</br>Rango de montos en el cual se realizará la
+        busqueda de transacciones.
+    TransactionDateRange:
+      type: object
+      properties:
+        from:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Rango de fecha de inicio de la
+            transacción. (Formato ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        to:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Rango de fecha “hasta” de la transacción.
+            (Formato ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+      description: >-
+        Exclusivo VisionPLUS.</br>Rango de fechas en el cual se realizará la
+        busqueda de transacciones.
+    TransactionSummaryRequest:
+      type: object
+      properties:
+        details:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>El campo de detalles representa el
+            indicador de detalles de la
+            transacción.</br></br>Valores:</br></br>Espacio = Usar tanto actual
+            como reciente (Mostrar la transacción pendiente/publicada);</br>B =
+            Usar tanto actual como reciente (Mostrar la transacción
+            pendiente/publicada)</br>C = Actual (Transacciones del ciclo hasta
+            la fecha);</br>R = Recientes (Transacciones detalladas del estado de
+            cuenta);</br>S = Sólo el primer estado de cuenta reciente</br>M =
+            Mensual (Transacciones detalladas del estado de cuenta);</br>P =
+            Transacciones contabilizadas.
+          example: B
+        type:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>El campo tipo representa el tipo de
+            transacción.</br></br>Valores:</br></br>0 = Todos;</br>1 = Intereses
+            y comisiones;</br>2 = Pago;</br>3 = Disputa;</br>4 = Almacén;</br>5
+            = Sólo intereses;</br>6 = Solo tarifa;</br>7 = Sólo tarjeta.
+          example: '0'
+        transactionsNumber:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El número de transacciones representa el
+            número de transacciones. El número máximo es 50.
+          example: '50'
+        monthsNumber:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El campo MonthNumber representa el número
+            de meses de la transacción.
+          example: '12'
+        transactionDateRange:
+          $ref: '#/components/schemas/TransactionDateRange'
+        transactionAmountRange:
+          $ref: '#/components/schemas/TransactionAmountRange'
+      description: Exclusivo VisionPLUS. </br> Datos de las transacciones.
+    UserSummaryRequest:
+      type: object
+      properties:
+        date:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información de fecha. Tamaño de la lista:
+            5
+          items:
+            $ref: '#/components/schemas/Date'
+        amount:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información de cantidad. Tamaño de la
+            lista: 5
+          items:
+            $ref: '#/components/schemas/Amount'
+        code:
+          type: array
+          description: Exclusivo VisionPLUS.</br>Información del código.
+          items:
+            $ref: '#/components/schemas/Code'
+      description: Exclusivo VisionPLUS.</br>Información del usuario.
+    AccountSummaryResponse:
+      type: object
+      properties:
+        number:
+          maxLength: 15
+          type: string
+          description: >-
+            Número de cuenta del formateado. Concatena EEE-CCCCCCCC-A-D. Donde:
+            EEE = Código de Entidad, CCCCCCCC = Numero de cuenta, A = Adicional,
+            y D = Digito verificador de la cuenta.
+          example: 019-1090909-0-9
+        checkDigit:
+          maxLength: 1
+          type: string
+          description: >-
+            Dígito verificador de la cuenta. Dígito que se agrega al número de
+            cuenta con el fin de detectar errores. Este numero puede variar
+            entre 0 y 9.
+          example: '9'
+        currentGroup:
+          maxLength: 2
+          type: string
+          description: >-
+            Grupo Cuenta Corriente procesado. Valores para Argentina 11, 12, 13,
+            14; Uruguay 01, 02, 03, 04.
+          example: '11'
+        logo:
+          maxLength: 3
+          type: string
+          description: >-
+            Código que identifica al producto/marca. El valor puede ser un
+            numero entre 0 y 999.
+          example: '501'
+        statement:
+          $ref: '#/components/schemas/Statement'
+        balance:
+          $ref: '#/components/schemas/Balance'
+        limits:
+          type: array
+          description: Información de Límites y Disponibles.
+          items:
+            $ref: '#/components/schemas/Limit'
+        totals:
+          type: array
+          description: Datos consolidados del resumen.
+          items:
+            $ref: '#/components/schemas/Total'
+        taxesFeesAndInterests:
+          type: array
+          description: Datos de Impuestos, Tarifas e Intereses.
+          items:
+            $ref: '#/components/schemas/TaxesFeesAndInterests'
+      description: Datos de la cuenta.
+    Additional:
+      type: object
+      properties:
+        fullName:
+          maxLength: 26
+          type: string
+          description: Nombre del cliente titular o adicionales.
+          example: Esteban Gonzales
+        label:
+          maxLength: 13
+          type: string
+          description: >-
+            Se informa:</br></br>Valores</br></br>Total Titular</br>Total
+            Adicional
+          example: Total Titular
+        currencyBalance:
+          $ref: '#/components/schemas/CurrencyBalance'
+      description: >-
+        Datos del cliente titular o adicionales. Conocido también como
+        "AUTORIZADO".
+    Address:
+      type: object
+      properties:
+        street:
+          maxLength: 30
+          type: string
+          description: Domicilio del cliente, Calle y Número del domicilio.
+          example: Av San Juan 1089
+        floor:
+          maxLength: 2
+          type: string
+          description: Piso del domicilio del cliente.
+          example: '1'
+        department:
+          maxLength: 3
+          type: string
+          description: Departamento del domicilio del cliente.
+          example: A
+        city:
+          maxLength: 20
+          type: string
+          description: Ciudad del domicilio del cliente.
+          example: Quilmes
+        zipCode:
+          maxLength: 8
+          type: string
+          description: Código postal del domicilio del cliente.
+          example: '01859'
+      description: Información del domicilio del cliente.
+    Allocated:
+      type: object
+      properties:
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Monto imputado en pesos. Formato -999999999999,99. Se informan
+            blancos a izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 10
+          type: string
+          description: >-
+            Monto imputado en dólares. Formato -999999,99. Se informan blancos a
+            izquierda
+          example: '-999999,99'
+      description: Datos de importe otorgado.
+    Authorization:
+      type: object
+      properties:
+        authorizationTime:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Capturar la hora de autorización.
+            Esta información debe completarse desde la compensación. La hora de
+            autorización se mencionará en el formato HH:MM:SS. En el caso de las
+            transacciones con VISA, la hora no se captura en el archivo de
+            liquidación.
+          format: hh:mm:ss
+          example: '14:27:45'
+        authorizationCode:
+          maxLength: 6
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Código de autorización de la
+            transacción.
+          example: A01526
+      description: Exclusivo VisionPLUS. Datos de la autorización.
+    Balance:
+      type: object
+      properties:
+        billedBeginning:
+          maxLength: 17
+          type: integer
+          description: >-
+            Exclusivo VisionPLUS. Saldo inicial de la cuenta en este estado de
+            cuenta.
+          format: int32
+          example: 100
+        billedEnding:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Saldo final de la cuenta en este estado de
+            cuenta.
+          example: '100'
+        totalBeginning:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Saldo total inicial. Monto: formato con
+            decimales únicamente (por NOD).
+          example: '100'
+        totalEnding:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Saldo final total. Monto: formato con
+            decimales únicamente (por NOD).
+          example: '100'
+        lateChargeAssessed:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. El saldo sobre el cual ya se ha aplicado el
+            recargo por pago atrasado.
+          example: '100'
+        lateChargeEnding:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. El saldo al final del ciclo que califica para
+            el cargo por pago atrasado.
+          example: '100'
+        lastMonth:
+          $ref: '#/components/schemas/LastMonth'
+        currentMonth:
+          $ref: '#/components/schemas/CurrencyMonth'
+        nextMonth:
+          $ref: '#/components/schemas/NextMonth'
+      description: >-
+        Proporciona información del estado de cuenta de la tarjeta al final de
+        su ciclo de facturación.
+    Barcode:
+      type: object
+      properties:
+        numericKey:
+          maxLength: 49
+          type: string
+          description: Valor numérico del código de barras para en talón de pago.
+          example: '32165400000006578910000000000231560004895620158745'
+        header:
+          maxLength: 10
+          type: string
+          description: Correspondiente al encabezado del Código de Barras del resumen.
+          example: '256498'
+      description: Información de códigos de barras en resumen.
+    Block:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '100'
+        value:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Campo de dos partes que identifica los
+            códigos de bloque asignados a la cuenta. Valores:</br>A–Z y en
+            blanco (o espacio).
+          example: A
+      description: Exclusivo VisionPLUS.</br>Bloque de información.
+    Branch:
+      type: object
+      properties:
+        number:
+          maxLength: 3
+          type: string
+          description: Número asignado a la Sucursal otorgante de la tarjeta.
+          example: '66'
+        checkDigit:
+          maxLength: 1
+          type: string
+          description: Dígito verificador correspondiente a la Entidad Sucursal.
+      description: Información que identifica a la Sucursal otorgante de la tarjeta.
+    CardSummaryResponse:
+      type: object
+      properties:
+        number:
+          maxLength: 19
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Identificador único o token asociado
+            al número de tarjeta o instrumento de pago FirstVision PAN Token.
+          example: 00123456ID5IXX12345
+        sequence:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Secuencia de tarjeta.
+          example: '1'
+        blockCode:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Código de bloqueo de tarjeta.
+          example: A
+        acceptorId:
+          maxLength: 16
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Identificación del receptor de
+            tarjetas.
+          example: LJS38RNS24900003
+        embossedName:
+          maxLength: 40
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Nombre en relieve en tarjeta.
+          example: Embossed name
+      description: Exclusivo VisionPLUS.
+    Checking:
+      type: object
+      properties:
+        flag:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Bandera de la Cámara de Compensación
+            Automatizada.
+        routingNumber:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Código que indica el número de
+            agencia asignado al titular de la tarjeta.
+      description: Exclusivo VisionPLUS.</br>Comprobando información.
+    ConversionRate:
+      type: object
+      properties:
+        value:
+          maxLength: 12
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Tasa de conversión de transacciones.
+          example: '125'
+        formattedValue:
+          maxLength: 18
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Tasa de conversión de transacciones.
+          example: '125.0'
+      description: Exclusivo VisionPLUS.
+    Credit:
+      type: object
+      properties:
+        amount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Importe total de todos los créditos
+            del lote. Importe: formato con decimales únicamente (por NOD).
+          example: '100'
+        number:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número total de transacciones de
+            crédito en el lote.
+          example: '100'
+      description: Exclusivo VisionPLUS.</br>Información de crédito.
+    Currency:
+      type: object
+      properties:
+        currencyDescription:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Código de moneda ISO que identifica
+            la unidad monetaria para los campos de monto monetario.
+          example: '100'
+        code:
+          maxLength: 28
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Descripción de la moneda.
+          example: currency description
+        decimalNumber:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número de posiciones decimales a la
+            derecha del punto decimal (u otro carácter decimal) en los campos de
+            monto monetario.
+          example: '1'
+      description: Exclusivo VisionPLUS.</br>Información sobre divisas.
+    CurrencyBalance:
+      type: object
+      properties:
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Saldo en pesos del autorizado. Formato -999999999999,99. Se informan
+            blancos a izquierda.
+          example: '-999999999999,99'
+        foreignCurrencyAmount:
+          maxLength: 12
+          type: string
+          description: >-
+            Saldo en dólares del autorizado. Formato -999999999,99. Se informan
+            blancos a izquierda
+          example: '-99999999,99'
+      description: Saldos del autorizado.
+    CurrencyMonth:
+      type: object
+      properties:
+        statementDate:
+          maxLength: 10
+          type: string
+          description: Fecha de cierre actual. Formato ISO 8601.
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        dueDate:
+          maxLength: 10
+          type: string
+          description: Fecha de vencimiento actual. Formato ISO 8601.
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Saldo actual. Formato -999999999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 13
+          type: string
+          description: >-
+            Saldo actual en dólares. Formato -999999999,99. Se informan blancos
+            a izquierda.
+          example: '-999999999,99'
+        minimumPayment:
+          maxLength: 16
+          type: string
+          description: >-
+            Pago mínimo actual. Formato -999999999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999999999,99'
+    Customer:
+      type: object
+      properties:
+        fullName:
+          maxLength: 30
+          type: string
+          description: Nombre y apellido del cliente.
+          example: Alamo, Patricia
+        tributaryNumber:
+          maxLength: 13
+          type: string
+          description: Número de Clave Única de Identificación Tributaria (CUIT).
+          example: 28-99999999-7
+        cardTypeDescription:
+          maxLength: 2
+          type: string
+          description: >-
+            Tipo de tarjeta. Denominación del producto marca. Indica el tipo de
+            plástico.</br></br>Valores:</br></br>AC: MasterCard Regional</br>MC:
+            MasterCard Internacional/Diners Internacional</br>GC: Gold
+            MasterCard.
+          example: AC
+        affinityGroupCode:
+          maxLength: 5
+          type: string
+          description: Código que identifica al grupo de afinidad del cliente.
+          example: '2051'
+        customerNumber:
+          maxLength: 19
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número que identifica a una cliente.
+          example: '0123456789123456789'
+        alternateCustomerNumber:
+          maxLength: 19
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número alternativo de client.
+          example: '0123456789123456789'
+        shortName:
+          maxLength: 20
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Nombre corto del titular de la
+            cuenta.
+          example: Jhon
+        residenceId:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Código que identifica el estado,
+            provincia o país en el que reside el titular de la cuenta.
+          example: ARI
+        address:
+          $ref: '#/components/schemas/Address'
+        settlement:
+          $ref: '#/components/schemas/Settlement'
+      description: Información del cliente.
+    Debit:
+      type: object
+      properties:
+        amount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Importe total de todos los créditos
+            del lote. Importe: formato con decimales únicamente (por NOD).
+          example: '100'
+        number:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número total de transacciones de
+            crédito en el lote.
+          example: '100'
+      description: Exclusivo VisionPLUS.</br>Información de crédito.
+    Detail:
+      type: object
+      properties:
+        code:
+          maxLength: 13
+          type: string
+          description: >-
+            Código que identifica a la clave del registro general, a saber:
+            </br></br>Valores: </br></br>00080 - 00010 = Detalle de Cargos y
+            Ajustes, </br>00080 - 00020 = Compras del Mes, </br>00080 - 00030 =
+            Débitos Automáticos, </br>00080 - 00040 = Cuotas del Mes.
+          example: 00080 - 00010
+        codeDescription:
+          maxLength: 40
+          type: string
+          description: >-
+            Código que identifica a la clave del registro general, a saber:
+            </br></br>Valores: </br></br>00080 - 00010 = Detalle de Cargos y
+            Ajustes, </br>00080 - 00020 = Compras del Mes, </br>00080 - 00030 =
+            Débitos Automáticos, </br>00080 - 00040 = Cuotas del Mes.
+          example: Detalle de Cargos y Ajustes
+        operationDate:
+          maxLength: 10
+          type: string
+          description: Fecha de la operación.
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        description:
+          maxLength: 40
+          type: string
+          description: Descripción del movimiento.
+          example: SU PAGO
+        ticketID:
+          maxLength: 5
+          type: string
+          description: Número de cupón. El valor de este campo puede ser igual a blancos.
+          example: N0503
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Importe en pesos. Formato -999999999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 12
+          type: string
+          description: >-
+            Importe en dólares. Formato -99999999,99. Se informan blancos a
+            izquierda.
+          example: '-99999999,99'
+        type:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Indica si una transacción es de débito,
+            crédito o nota. Valores: </br> </br>D = débito; </br>C = crédito;
+            </br>M = nota.
+          example: C
+        categoryCode:
+          maxLength: 5
+          type: integer
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Código de categoría estándar ISO
+            (ISO 18245) del comerciante donde se otorgaron puntos de comprador
+            frecuente.
+          format: int32
+          example: 5192
+        logicModuleNumber:
+          maxLength: 3
+          type: integer
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Módulo lógico asociado al código de
+            transacción.
+          format: int32
+          example: 605
+        categoryDescription:
+          maxLength: 28
+          type: string
+          description: Exclusivo VisionPLUS. Descripción de categoría.
+          example: Category description
+        transactionType:
+          maxLength: 7
+          type: string
+          description: Exclusivo VisionPLUS. </br></br>Tipo de transacción.
+          example: TYPE
+        locationType:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Este campo sirve para identificar si la
+            transacción es interna, local, nacional o internacional según el
+            indicador de calificación del nivel de transacción. Valores:
+            </br></br>T = interna; </br>L = local; </br>D = nacional; </br>I =
+            internacional.
+          example: T
+        insuranceProduct:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS. Producto de seguro.
+          example: AB
+        virtualIndicator:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS. Indicador Virtual.
+          example: S
+        qualifierIndicator:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS. </br>Indicador de calificación.
+          example: A
+        visaId:
+          maxLength: 15
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Identificación de transacción de
+            Visa.
+          example: '123456789123456'
+        effectiveDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Fecha de vigencia (ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        postDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Fecha de publicación (ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        batchDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Fecha de lote (en ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        totalEffectiveValue:
+          maxLength: 16
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Este campo es para capturar el valor
+            efectivo total (VET) de la transacción internacional solo para
+            Brasil. El campo se completará si se cumplen las siguientes
+            condiciones.
+          example: '1258000'
+        demandDepositAccountIndicator:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador DDA (cuentas de depósito a
+            la vista). Este campo se muestra solo para transacciones con tarjeta
+            de débito. La funcionalidad de la tarjeta de débito debe estar
+            activa.
+          example: D
+        record:
+          $ref: '#/components/schemas/Record'
+        loyalty:
+          $ref: '#/components/schemas/Loyalty'
+        terminal:
+          $ref: '#/components/schemas/Terminal'
+        authorization:
+          $ref: '#/components/schemas/Authorization'
+        fraud:
+          $ref: '#/components/schemas/Fraud'
+        original:
+          $ref: '#/components/schemas/Original'
+        conversionRate:
+          $ref: '#/components/schemas/ConversionRate'
+        usd:
+          $ref: '#/components/schemas/Dollar'
+        interchange:
+          $ref: '#/components/schemas/Interchange'
+        principal:
+          $ref: '#/components/schemas/Principal'
+        purchase:
+          $ref: '#/components/schemas/PurchaseDetail'
+        card:
+          $ref: '#/components/schemas/CardSummaryResponse'
+        installment:
+          $ref: '#/components/schemas/Installment'
+        merchant:
+          $ref: '#/components/schemas/Merchant'
+        hasFeeAdjustment:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br>Indicador de ajuste de tarifas. Valores:
+            </br></br>false = Sin ajuste; </br>true = Ajuste.
+          example: false
+        hasInterestAdjustment:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador de ajuste de intereses.
+            Valores: </br></br>falso = Sin ajuste; </br>verdadero = Ajuste.
+          example: false
+        hasDispute:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador de disputa. Valores:
+            </br></br>falso = Sin disputa; </br>verdadero = Disputa.
+          example: false
+        isChargebackEligible:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador de devolución de carga.
+            Valores: </br></br>false = La transacción no es elegible para
+            devolución de cargo; </br>true = La transacción es elegible para
+            devolución de cargo.
+          example: false
+        isCopyRequest:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador de solicitud de copia.
+            Valores: </br></br>false = Sin solicitud de copia; </br>true =
+            Copiar solicitud.
+          example: false
+        isReversal:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador de reversión. Valores:
+            </br></br>falso = Sin reversión; </br>verdadero = inversión
+          example: false
+        isMisapplied:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Indicador mal aplicado.
+            Valores:</br></br>false = No mal aplicado; </br>verdadero = Mal
+            aplicado.
+          example: false
+        isIssuerClearingHouse:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de la Cámara de
+            Compensación del Emisor. Valores:</br></br>false = Sin Cámara de
+            Compensación Emisora (ICH);</br>verdadero = Cámara de Compensación
+            del Emisor (ICH).
+          example: false
+        isDisputeAuxiliaryFile:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de archivo auxiliar de
+            disputa. Valores:</br></br>false = Archivo auxiliar sin
+            disputa;</br>true = Disputar archivo auxiliar.
+          example: false
+        recurringTransaction:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de parada/reanudación.
+            Valores:</br></br>false = Detener una transacción
+            recurrente;</br>true = Reanudar una transacción recurrente.
+          example: false
+      description: Detalle de las transacciones.
+    DetailInternationalCash:
+      type: object
+      properties:
+        creditAvailable:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Crédito en efectivo internacional
+            disponible.</br></br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        creditLimit:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Límite de crédito en efectivo
+            internacional.</br></br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        disuputedAmount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Monto en disputa en efectivo
+            internacional.</br></br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+      description: Exclusivo VisionPLUS.</br></br>Información de efectivo.
+    DetailInternationalRetail:
+      type: object
+      properties:
+        creditAvailable:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Crédito minorista internacional
+            disponible.</br></br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        creditLimit:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Límite de crédito minorista
+            internacional.</br></br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        disuputedAmount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Importe en disputa de venta minorista
+            internacional.</br></br>Importe: formato con decimales únicamente
+            (por NOD).
+          example: '100'
+      description: Exclusivo VisionPLUS.</br></br>Información de venta minorista.
+    DetailReservedAmount:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '1'
+        value:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Reservado para uso futuro.</br>Monto:
+            formato con decimales únicamente (por NOD).
+          example: '100'
+      description: >-
+        Exclusivo VisionPLUS.</br>Información sobre la cantidad Tamaño de la
+        lista: 4
+    DetailReservedCode:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '1'
+        value:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br>Reservado para uso futuro.
+          example: '1'
+      description: 'Exclusivo VisionPLUS.</br>Información del código Tamaño de la lista: 4'
+    DetailReservedDate:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '1'
+        value:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br>Reservado para uso futuro.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+      description: 'Exclusivo VisionPLUS.</br>Información de fecha Tamaño de la lista: 4'
+    DetailUser:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Posición del elemento de la matriz.
+          example: '1'
+        value:
+          maxLength: 40
+          type: string
+          description: Exclusivo VisionPLUS.
+          example: '100'
+      description: 'Exclusivo VisionPLUS.</br>Información de fecha Tamaño de la lista: 5'
+    DetailsInstallment:
+      type: object
+      properties:
+        id:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Posición del elemento de la matriz.
+          example: '1'
+        amount:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Monto de la cuota.
+          example: '100'
+        number:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de cuotas.
+          example: '10'
+        effectiveTotalCost:
+          maxLength: 7
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de cuotas.
+          example: '100'
+      description: Exclusivo VisionPLUS.</br></br>Información de cuotas.
+    Dollar:
+      type: object
+      properties:
         amount:
           $ref: '#/components/schemas/Amount'
-      description: Agrupa beneficios en Mes/Monto. Ocurre hasta 12 veces.
+        conversionRate:
+          $ref: '#/components/schemas/ConversionRate'
+      description: Exclusivo VisionPLUS.
+    Dues:
+      type: object
+      properties:
+        monthNumber:
+          maxLength: 8
+          type: string
+          description: Datos por mes.
+          example: month1
+        date:
+          maxLength: 7
+          type: string
+          description: Denominación del mes. Formato MM/AAAA.
+          example: 12/2023
+        currencySign:
+          maxLength: 1
+          type: string
+          description: Signo de moneda.
+          example: $
+        amount:
+          maxLength: 10
+          type: string
+          description: >-
+            Deuda no vencida en pesos. Formato -999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999,99'
+      description: Cuotas pendientes del plan de cuotas.
+    Fraud:
+      type: object
+      properties:
+        transferredStatus:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Bandera que indica el estado de la
+            transacción fraudulenta transferida. Valores:</br></br>P =
+            Transferencia pendiente;</br>T = Transferido;</br>X = Transferido
+            en;</br>Espacio = no aplicable.
+          example: P
+        fraudIndicator:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de fraude.
+            Valores:</br></br>false = Sin fraude;</br>true = fraude.
+          example: false
+        transferIndicator:
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Indicador de transferencia de fraude.
+            Valores:</br></br>false = Transferencia sin fraude;</br>true =
+            transferencia fraudulenta
+          example: false
+      description: Exclusivo VisionPLUS.
+    FrequentShopperPoints:
+      type: object
+      properties:
+        beginningBalance:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Saldo inicial de puntos de comprador
+            frecuente. Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        endingBalance:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Saldo final de puntos de comprador
+            frecuente. Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        cycleToDateAdjusted:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Puntos de comprador frecuente
+            ajustados desde el inicio hasta la fecha. Monto: formato con
+            decimales únicamente (por NOD).
+          example: '100'
+        cycleToDateDisbursed:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Puntos de comprador frecuente
+            desembolsados hasta la fecha en el ciclo. Monto: formato con
+            decimales únicamente (por NOD).
+          example: '100'
+        cycleToDateEarned:
+          maxLength: 9
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Puntos de comprador frecuente
+            obtenidos hasta la fecha. Monto: formato con decimales únicamente
+            (por NOD).
+          example: '100'
+      description: >-
+        Exclusivo VisionPLUS.</br>Información sobre puntos de comprador
+        frecuente.
+    Installment:
+      type: object
+      properties:
+        total:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número total de cuotas que el titular
+            de la tarjeta acordó pagar por la transacción.
+          example: '12'
+        originalTransactionAmount:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Monto original de la transacción a
+            plazos.
+          example: '0'
+        firstEarlyRelease:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número de cuota de una cuota
+            facturada en particular o la primera secuencia de cuotas en un rango
+            de cuotas marcadas para una liberación anticipada desde el archivo
+            de facturación de cuotas.
+          example: '12'
+        lastEarlyRelease:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Última secuencia de pago que está
+            marcada para una liberación anticipada desde el archivo de
+            facturación a plazos. El valor predeterminado es 00, lo que indica
+            que el plazo contabilizado se libera.
+          example: '12'
+        terms:
+          $ref: '#/components/schemas/Terms'
+        plan:
+          $ref: '#/components/schemas/Plan'
+        details:
+          type: array
+          description: Exclusivo VisionPLUS.</br></br>Información de cuotas.
+          items:
+            $ref: '#/components/schemas/DetailsInstallment'
+        dues:
+          type: array
+          description: Cuotas pendientes del plan de cuotas.
+          items:
+            $ref: '#/components/schemas/Dues'
+      description: Exclusivo VisionPLUS.</br></br>Datos del Plan de Cuotas.
+    Interchange:
+      type: object
+      properties:
+        reference:
+          maxLength: 23
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de referencia del intercambio.
+          example: '68456546'
+        fee:
+          maxLength: 9
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Tarifa de intercambio.
+          example: '4'
+      description: Exclusivo VisionPLUS.
+    International:
+      type: object
+      properties:
+        cash:
+          $ref: '#/components/schemas/DetailInternationalCash'
+        retail:
+          $ref: '#/components/schemas/DetailInternationalRetail'
+      description: Exclusivo VisionPLUS.</br>Información internacional.
+    LastMonth:
+      type: object
+      properties:
+        statementDate:
+          maxLength: 10
+          type: string
+          description: Fecha de cierre anterior. Formato ISO 8601.
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        dueDate:
+          maxLength: 10
+          type: string
+          description: Fecha de vencimiento anterior. Formato ISO 8601.
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Saldo anterior en pesos. Formato -999999999999,99. Se informan
+            blancos a izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 12
+          type: string
+          description: >-
+            Saldo anterior en dólares. Formato -99999999,99. Se informan blancos
+            a izquierda.
+          example: '-99999999,99'
+        minimumPayment:
+          maxLength: 16
+          type: string
+          description: >-
+            Pago mínimo anterior. Formato -999999999999,99. Se informan blancos
+            a izquierda.
+          example: '-999999999999,99'
+        purchase:
+          $ref: '#/components/schemas/Purchase'
+    Limit:
+      type: object
+      properties:
+        code:
+          maxLength: 13
+          type: string
+          description: >-
+            Código que identifica a la clave del registro. </br></br>Valores:
+            </br></br>00110 - 00001 Límite de Compra, </br>00110 - 00010 Límite
+            de Crédito, </br>00110 - 00020 Límite Contado </br>00110 - 00030
+            Límite Adelantos en Efectivo, </br>00110 - 00040 Límite de Compra en
+            Cuotas, </br>00110 - 00050 Límite Préstamos de Financiación,
+            </br>00110 - 00060 Límite Préstamos de Consumo, </br>00110 - 00100
+            Disponible Contado.
+          example: 00110 - 00001
+        description:
+          maxLength: 60
+          type: string
+          description: Descripción del código que identifica a la clave del registro.
+          example: Límite de Compra
+        limitAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Importe del límite. Formato -99999999999,99. Se informan blancos a
+            izquierda.
+          example: '-99999999999,99'
+      description: Información de Límites y Disponibles.
+    Loyalty:
+      type: object
+      properties:
+        points:
+          maxLength: 9
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Puntos.
+          example: '123456789'
+        programNumber:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de programa.
+          example: A
+      description: Exclusivo VisionPLUS.
+    Merchant:
+      type: object
+      properties:
+        city:
+          maxLength: 21
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Ciudad del comercio.
+          example: Brookfield
+        state:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Estado/Región del comercio.
+          example: WI
+        postalCode:
+          maxLength: 8
+          minLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Código postal del comercio.
+          example: '1893'
+        countryCode:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Código de país del comercio.
+          example: USA
+        phoneNumber:
+          maxLength: 21
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Teléfono del comercio.
+          example: 800-848-1337
+        name:
+          maxLength: 30
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Nombre de comercio.
+          example: COMERCIALIZADORA B
+        storeNumber:
+          maxLength: 9
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número del comercio.
+          example: '123456'
+        organization:
+          maxLength: 3
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Número de identificación de la
+            organización asociada a la tienda.
+          example: '123'
+      description: Exclusivo VisionPLUS. Datos del comercio.
+    MonthlySummaryDataResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSummaryResponse'
+        transaction:
+          $ref: '#/components/schemas/TransactionSummaryResponse'
+        token:
+          $ref: '#/components/schemas/Token'
+        additionals:
+          type: array
+          description: >-
+            Datos del cliente titular o adicionales. Conocido también como
+            "AUTORIZADO".
+          items:
+            $ref: '#/components/schemas/Additional'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        organization:
+          $ref: '#/components/schemas/Organization'
+        foreignIndicator:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Indicador de doble moneda.
+            Valores:</br>spacios o L = Cuenta local</br>F = Cuenta extranjera.
+          example: L
+        status:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Estado de la cuenta.
+          example: '1'
+        relationshipNumber:
+          maxLength: 19
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>El campo relationshipNumber representa un
+            identificador único que se utiliza para rastrear y asociar una
+            relación específica dentro de un sistema o base de datos. Este campo
+            es obligatorio para las cuentas que no son de prepago.
+          example: '0123456789123456789'
+        digitableLine:
+          maxLength: 55
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Código que indica la línea digitalizable
+            de la cuenta.
+          example: line
+        employeeCode:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Código de empleado definido por el
+            usuario.
+          example: '11'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        checking:
+          $ref: '#/components/schemas/Checking'
+        credit:
+          $ref: '#/components/schemas/Credit'
+        debit:
+          $ref: '#/components/schemas/Debit'
+        international:
+          $ref: '#/components/schemas/International'
+        frequentShopperPoints:
+          $ref: '#/components/schemas/FrequentShopperPoints'
+        payment:
+          $ref: '#/components/schemas/Payment'
+        blocks:
+          type: array
+          description: Exclusivo VisionPLUS.</br>Bloque de información.
+          items:
+            $ref: '#/components/schemas/Block'
+        reserved:
+          $ref: '#/components/schemas/Reserved'
+        user:
+          $ref: '#/components/schemas/UserSummaryResponse'
+    NextMonth:
+      type: object
+      properties:
+        dueDate:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Fecha próximo vencimiento.
+          example: '2024-05-31'
+        statementDate:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Fecha próximo cierre.
+          example: '2024-05-31'
+    Organization:
+      type: object
+      properties:
+        number:
+          maxLength: 3
+          type: string
+          description: Numero de organización; entidad emisora de la tarjeta.
+          example: '30'
+        tributaryNumber:
+          maxLength: 13
+          type: string
+          description: >-
+            Número de Clave Única de Identificación Tributaria (CUIT) de la
+            Institución Emisora de la tarjeta.
+          example: 30-99999999-3
+        branch:
+          $ref: '#/components/schemas/Branch'
+      description: Información que identifica a la organización (Banco/Entidad).
+    Original:
+      type: object
+      properties:
+        amount:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Monto original de la transacción.
+          example: '245'
+        formattedAmount:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Importe de la transacción original
+            formateado.
+          example: '245.0'
+        currency:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Moneda de transacción original.
+          example: MXN
+        currencyDescription:
+          maxLength: 28
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Descripción de la moneda de la
+            transacción original.
+          example: MXN
+      description: Exclusivo VisionPLUS.
+    Payment:
+      type: object
+      properties:
+        alternateMinimum:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto de pago mínimo alternativo o
+            especial alternativo solicitado para el ciclo de facturación
+            actual.</br>Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        amount:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br>Saldo sujeto a pago del estado de cuenta.
+          example: '100'
+        billFee:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br>Indicador de tarifa de factura.
+          example: '1'
+        billingCycle:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Día del mes en que se realiza el ciclo de
+            la cuenta.</br>Los valores son 01–31.
+          example: '10'
+        cashCreditAvailable:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Crédito disponible en efectivo.</br>Monto:
+            formato con decimales únicamente (por NOD).
+          example: '100'
+        creditClassification:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Código que identifica la clasificación
+            crediticia actual del titular de la cuenta en función del desempeño
+            de la cuenta.
+          example: 'N'
+        creditPlan:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br>Plan de crédito asociado a la cuenta.
+          example: '100'
+        currentDue:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Pago actual pendiente de pago de la
+            cuenta.</br>Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        customerSelectedDueDate:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha de vencimiento del pago seleccionada
+            por el cliente.
+          example: '100'
+        cycleDate:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha del último estado de cuenta
+            generado.
+          example: '100'
+        cycleDaysNumber:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS.</br>Número de días del ciclo.
+          example: '10'
+        deliquencyRecency:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Número de ciclos de facturación desde que
+            ia registró el último pago calificado en una cuenta. El nivel de
+            morosidad reciente se indica con un valor de 0 a 9.
+          example: '4'
+        dueCycleCode:
+          maxLength: 9
+          type: string
+          description: Exclusivo VisionPLUS.</br>Código de vencimiento del ciclo de pago.
+          example: '1'
+        dueDate:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha de vencimiento del pago.</br>Fecha
+            gregoriana: formato CCAA-MM-DD.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        dueDayDate:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha de vencimiento del pago del estado
+            de cuenta.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        fixedAmount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto de pago fijo, monto de umbral de
+            pago mínimo máximo o porcentaje del límite de crédito que se utiliza
+            para calcular el monto de pago.</br>Monto: formato con decimales
+            únicamente (por NOD).
+          example: '100'
+        graceDaysExpirationDate:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Fecha en la que expira el período de día
+            de gracia para el ciclo actual, también llamada fecha de vencimiento
+            del día de gracia.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        interestFree:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Pago que debe realizar el cliente para no
+            generar intereses.
+          example: '10'
+        interestRate:
+          maxLength: 7
+          type: string
+          description: Exclusivo VisionPLUS.</br>Cálculo de tasa de interés para cuotas.
+          example: '100'
+        minimumDueConverted:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Pago mínimo adeudado convertido a moneda
+            extranjera cuando el indicador de facturación dual está activo para
+            una cuenta extranjera.</br>Monto: formato con decimales únicamente
+            (por NOD).
+          example: '100'
+        nextBillingCycle:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br>Fecha del próximo ciclo de facturación.
+          example: '11'
+        openToBuy:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto actual abierto a compra de la
+            cuenta.</br>Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        overlimit:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Cantidad que una cuenta puede sobrepasar
+            su límite.
+          example: '100'
+        plansNumber:
+          maxLength: 5
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Número de planes de crédito activos en la
+            cuenta.
+          example: '10'
+        projected:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Pago ACH proyectado.</br>Monto: formato
+            con decimales únicamente (por NOD).
+          example: '100'
+        scheduleAmount:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto del pago programado.</br>Monto:
+            formato con decimales únicamente (por NOD).
+          example: '100'
+        totalDue:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Importe total adeudado en la
+            cuenta.</br>Importe: formato con decimales únicamente (por NOD).
+          example: '100'
+        totalPastDue:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Pago total vencido.</br>Monto: formato con
+            decimales únicamente (por NOD).
+          example: '100'
+        yearToDate:
+          $ref: '#/components/schemas/YearToDate'
+      description: Exclusivo VisionPLUS.</br>Información de pago.
+    Plan:
+      type: object
+      properties:
+        type:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Tipo de plan.
+          example: A
+        number:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de plan.
+          example: '12345'
+        sequenceNumber:
+          maxLength: 12
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de secuencia del plan.
+          example: '12'
+        openDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS. Fecha de apertura del plan (ISO 8601).
+          format: yyyy-MM-dd
+          example: '2024-05-31'
+      description: Exclusivo VisionPLUS.
+    Principal:
+      type: object
+      properties:
+        unbilled:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Principal no facturado.
+          example: '3464593827'
+        remaining:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Principal restante.
+          example: '3.893730298E7'
+      description: Exclusivo VisionPLUS.
+    Purchase:
+      type: object
+      properties:
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Compras período anterior en pesos. Formato -999999999999,99. No se
+            informan ceros a la izquierda; se informan blancos a derecha.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 10
+          type: string
+          description: >-
+            Compras período anterior en dólares. Formato -999999,99. Se informan
+            blancos a izquierda.
+          example: '-999999,99'
+    PurchaseDetail:
+      type: object
+      properties:
+        order:
+          maxLength: 16
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Orden de compra.
+          example: 0A1B2C3D4E5F6G
+        ticketNumber:
+          maxLength: 15
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Numero de ticket.
+          example: 0A1B2C3D4E5F6G
+        referenceNumber:
+          maxLength: 23
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de referencia.
+          example: 0A1B2C3D4E5F6G
+        amount:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Monto.
+          example: '125'
+        quantity:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Cantidad.
+          example: '1'
+        unitPrice:
+          maxLength: 17
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Precio unitario.
+          example: '1000'
+        itemNumber:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de item.
+          example: '45'
+        inventoryNumber:
+          maxLength: 9
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de SKU.
+          example: '12345'
+        department:
+          maxLength: 4
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Departamento.
+          example: XDE
+        source:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Fuente.
+          example: A
+        salesperson:
+          maxLength: 12
+          type: string
+          description: Exclusivo VisionPLUS. Vendedor. Empleado de ventas.
+          example: SALESPERSON
+        description:
+          maxLength: 40
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Descripción.
+          example: 0A1B2C3 D4E5F 6G
+        payment:
+          $ref: '#/components/schemas/PurchasePayment'
+      description: Exclusivo VisionPLUS.
+    PurchasePayment:
+      type: object
+      properties:
+        recurringIndicator:
+          maxLength: 1
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            El tipo de transacción que se publica. Valores:
+
+            R = Transacciones recurrentes;
+            I = Transacciones a plazos;
+            En blanco = Otras transacciones.
+          example: R
+        referenceNumber:
+          maxLength: 15
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Número de referencia de pago.
+          example: '123456789123456'
+        originalAmount:
+          maxLength: 17
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Monto del pago original.
+          example: '125'
+        relationshipAmount:
+          maxLength: 17
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Monto del pago de la relación.
+          example: '125'
+      description: Exclusivo VisionPLUS.
+    Record:
+      type: object
+      properties:
+        recordNumber:
+          maxLength: 5
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Número de registro.
+          example: '12345'
+        code:
+          maxLength: 4
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Codigo de transacción.
+          example: '1234'
+        reference:
+          maxLength: 23
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Referencia de transacción.
+          example: 839FJJHS00
+        channelId:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Canal ID.
+          example: st
+      description: Exclusivo VisionPLUS.
+    Reserved:
+      type: object
+      properties:
+        amount:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información sobre la cantidad Tamaño de la
+            lista: 4
+          items:
+            $ref: '#/components/schemas/DetailReservedAmount'
+        code:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información del código Tamaño de la lista:
+            4
+          items:
+            $ref: '#/components/schemas/DetailReservedCode'
+        date:
+          type: array
+          description: 'Exclusivo VisionPLUS.</br>Información de fecha Tamaño de la lista: 4'
+          items:
+            $ref: '#/components/schemas/DetailReservedDate'
+      description: Exclusivo VisionPLUS.</br>Información reservada.
+    Settlement:
+      type: object
+      properties:
+        model:
+          maxLength: 5
+          type: string
+          description: Código que identifica al modelo de liquidación.
+          example: RC000
+        taxCategory:
+          maxLength: 40
+          type: string
+          description: >-
+            Categoría de IVA. Descripción de la categoría de
+            IVA</br></br>Valores:</br></br>Responsable Inscripto,</br>Sujeto No
+            Categorizado,</br>Exento,</br>Consumidor final,</br>Empleado
+            Banco,</br>Monotributista,</br>Responsable No Inscripto.
+          example: Responsable Inscripto
+        submodel:
+          $ref: '#/components/schemas/Submodel'
+      description: Datos de liquidación.
+    Statement:
+      type: object
+      properties:
+        idNumber:
+          maxLength: 12
+          type: string
+          description: Número que identifica al resumen de cuenta emitido.
+          example: '16070389772'
+        counter:
+          maxLength: 12
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Contador actualizado cada vez que se produce
+            un estado de cuenta en papel durante el procesamiento del estado de
+            cuenta.
+          example: '122'
+        frequency:
+          maxLength: 2
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Código que indica con qué frecuencia se
+            generan estados de cuenta para la cuenta.
+          example: '12'
+        type:
+          maxLength: 1
+          type: string
+          description: Exclusivo VisionPLUS. Indica el tipo de estado de cuenta.
+          example: I
+        date:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Fecha del último estado de cuenta generado.
+            Fecha gregoriana: formato CCAA-MM-DD.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        fromDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS. Fecha de inicio del estado de cuenta.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        lastDate:
+          maxLength: 10
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Fecha del último estado de cuenta. Fecha
+            gregoriana: formato CCAA-MM-DD.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        toDate:
+          maxLength: 10
+          type: string
+          description: Exclusivo VisionPLUS. Fecha de finalización del estado de cuenta.
+          format: yyyy-MM-dd
+          example: '2023-06-01'
+        totalInterest:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Interés total de este estado de cuenta. Monto:
+            formato con decimales únicamente (por NOD).
+          example: '100'
+        totalMoraInterest:
+          maxLength: 13
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Monto total de intereses moratorios
+            facturados.
+          example: '100'
+        barcode:
+          $ref: '#/components/schemas/Barcode'
+        termsAndConditions:
+          $ref: '#/components/schemas/TermsAndConditions'
+      description: >-
+        Resume todas las transacciones que han tenido lugar en una cuenta
+        bancaria durante un período de tiempo determinado.
+    Submodel:
+      type: object
+      properties:
+        rate:
+          maxLength: 9
+          type: string
+          description: Submodelo de Tasas.
+          example: '1'
+        lifeInsuranceExpenses:
+          maxLength: 9
+          type: string
+          description: Submodelo de Gastos por Seguro de Vida.
+          example: '1'
+        parameter:
+          maxLength: 9
+          type: string
+          description: Submodelo de Parámetro.
+          example: '1'
+      description: Conjunto de supuestos sobre las condiciones comerciales futuras.
+    TaxesFeesAndInterests:
+      type: object
+      properties:
+        code:
+          maxLength: 13
+          type: string
+          description: >-
+            Código que identifica a la clave del registro general.
+            </br></br>Valores: </br></br>00090 - 00001 = Intereses de
+            Financiación, </br>00090 - 00010 = Intereses Compensatorios,
+            </br>00090 - 00020 = Intereses Punitorios, </br>00090 - 00030 =
+            Cargo de Resumen y Franqueo, </br>00090 - 00040 = Gastos
+            Administrativos, </br>00090 - 00050 = Impuesto de Sellos, </br>00090
+            - 00060 = Impuestos Provinciales, </br>00090 - 00070 = Seguro de
+            Vida, </br>00090 - 00080 = Devolución de Seguro de Vida, </br>00090
+            - 00090 = Cargos Fijos, </br>00090 - 00100 = IVA, </br>00090 - 00110
+            = Cargo Adm. Revolving (Solo aplica Perú), </br>00090 - 00120 = RG
+            3378 AFIP, </br>00090 - 00120 = RG 3450 AFIP, </br>00090 - 00120 =
+            PERCEPCION IVA DTO 354/18, </br>00090 - 00120 = IMPUESTO LEY PAIS,
+            </br>00090 - 00120 = IMPUESTO PAIS, </br>00090 - 00120 = IMPUESTO
+            PAIS AR.
+          example: 00090 - 00001
+        codeDescription:
+          maxLength: 40
+          type: string
+          description: >-
+            Código que identifica a la clave del registro general.
+            </br></br>Valores: </br></br>00090 - 00001 = Intereses de
+            Financiación, </br>00090 - 00010 = Intereses Compensatorios,
+            </br>00090 - 00020 = Intereses Punitorios, </br>00090 - 00030 =
+            Cargo de Resumen y Franqueo, </br>00090 - 00040 = Gastos
+            Administrativos, </br>00090 - 00050 = Impuesto de Sellos, </br>00090
+            - 00060 = Impuestos Provinciales, </br>00090 - 00070 = Seguro de
+            Vida, </br>00090 - 00080 = Devolución de Seguro de Vida, </br>00090
+            - 00090 = Cargos Fijos, </br>00090 - 00100 = IVA, </br>00090 - 00110
+            = Cargo Adm. Revolving (Solo aplica Perú), </br>00090 - 00120 = RG
+            3378 AFIP, </br>00090 - 00120 = RG 3450 AFIP, </br>00090 - 00120 =
+            PERCEPCION IVA DTO 354/18, </br>00090 - 00120 = IMPUESTO LEY PAIS,
+            </br>00090 - 00120 = IMPUESTO PAIS, </br>00090 - 00120 = IMPUESTO
+            PAIS AR.
+          example: Intereses de Financiación
+        description:
+          maxLength: 33
+          type: string
+          description: Descripción de la transacción.
+          example: PERC IIBB SERV DIG CABA
+        localCurrencyAmount:
+          maxLength: 16
+          type: string
+          description: >-
+            Importe en pesos. Formato -999999999999,99. Se informan blancos a
+            izquierda.
+          example: '-999999999999,99'
+        foreingCurrencyAmount:
+          maxLength: 10
+          type: string
+          description: >-
+            Importe en dólares. Formato -9999999,99. Se informan blancos a
+            izquierda.
+          example: '-9999999,99'
+      description: Datos de Impuestos, Tarifas e Intereses.
+    Terminal:
+      type: object
+      properties:
+        id:
+          maxLength: 8
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Campo para capturar el ID de terminal
+            de la transacción que se completará desde NCBTRAN-TERM-ID.
+          example: ID0002
+        entryMode:
+          maxLength: 2
+          type: string
+          description: Exclusivo VisionPLUS.</br></br>Modo de entrada de terminal.
+          example: AB
+      description: Exclusivo VisionPLUS.
+    Terms:
+      type: object
+      properties:
+        total:
+          maxLength: 2
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Condiciones totales de pago.
+          example: '99'
+        originalTotal:
+          maxLength: 2
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Términ Total Original.
+          example: '24'
+        current:
+          maxLength: 2
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Plazo de Cuota Actual.
+          example: '75'
+        remaining:
+          maxLength: 2
+          type: string
+          description: |-
+            Exclusivo VisionPLUS.
+
+            Términos restantes.
+          example: '11'
+      description: Exclusivo VisionPLUS.</br></br>Condiciones totales de pago.
+    TermsAndConditions:
+      type: object
+      properties:
+        general:
+          maxLength: 10000
+          type: string
+          description: Términos y condiciones generales del resumen.
+          example: >-
+            Debitaremos de su c.ahorro 0003234542 el importe de su pago mínimo
+            actual\\n El monto de IVA discriminado no puede computarse como
+            crédito fiscal
+        entity:
+          maxLength: 10000
+          type: string
+          description: Términos y condiciones de la entidad del resumen.
+          example: >-
+            Le informamos que en virtud de la comunicación del BCRA \"A\" 5928 a
+            partir del 1 de septiembre de  2016 el seguro de vida sobre los
+            saldos deudores solo se cobrará sobre los planes de cuotas
+            correspondiente a compras u otros planes de financiación realizados
+            hasta el 31 de agosto de 2016. Las compras, otras transacciones y
+            saldos deudores que se generen con posterioridad al 31 de agosto de
+            2016 no estarán afectados por el cobro del mencionado seguro de
+            vida. La tasa vigente para adelantos de efectivo en el exterior es
+            de TNA 20.00%, CFTNA 24,20% Estimado cliente: Ud. puede abonar en
+            cuotas fijas el saldo total de su resumen y sus consumos en contado
+            hasta en 24 meses. Abonando previamente su pago mínimo, podrá
+            cancelar el saldo a financiar accediendo a los planes de cuotas
+            detallados a continuación, teniendo que abonar la primer cuota del
+            plan elegido en su próximo resumen de cuenta. Ejemplo de
+            cuotificación por un saldo de $1.000: 3 cuotas de $402,31 (TNA: 122
+            %, TEA: 214,78%, CFTEA 305,95%, CFTNA 148,48% ) 6 cuotas de $229,79
+            (TNA: 122 %, TEA: 214,78%, CFTEA 304,71%, CFTNA 148,15% ) 12 cuotas
+            de $146,96 (TNA: 122 %, TEA: 214,78%, CFTEA 303,98%, CFTNA 147,95%)
+            24 cuotas de $101,35 (TNA: 122 %, TEA: 214,78%, CFTEA 303,61%,CFTNA
+            147,84%) Para acceder a este nuevo beneficio comuníquese al
+            0810-666-2378, de lunes a viernes de 9 a 18hs. Recuerde que luego de
+            la fecha de vencimiento de su resumen se le cobrarán los intereses
+            correspondientes hasta la fecha en la que se le otorgó el préstamo
+            en el próximo resumen de cuenta. Sujeto al disponible de la cuenta
+            en el momento de la solicitud. ADELANTOS EN EFECTIVO: disponga de
+            efectivo en las redes de Cajeros Automáticos Banelco o Link en el
+            país. Tasa fija en pesos: TNA 122 %, TEM 10,03 %, TEA 214,78 %,
+            CFTEA 308,78%, CFTNA 149,27%. Solicite su PIN llamando al
+            (011)4348-7000 para poder operar. De acuerdo a la Comunicación A
+            7198 del Banco Central de la República Argentina, la Tasa de interés
+            nominal anual sobre saldos excedentes a $200.000 es de CFTEA
+            426,49%, CFTNA 177,98% Para saldos menores a $200.000 es de TNA
+            122%, CFTEA 302,81%, CFTNA 147,62%. Según la comunicación A 7862 del
+            Banco Central de la República Argentina, a partir de los cierres de
+            Abril, la tasa de financiación será de TNA 122 % para saldos menores
+            a $200.000. De acuerdo a la comunicación A 7559 del Banco Central de
+            la República Argentina para los resúmenes que registren consumos en
+            moneda extranjera por un importe total superior a USD 200 la Tasa de
+            interés aplicable a la totalidad del saldo financiado será la misma
+            que resulta aplicable para saldos financiados excedentes de
+            $200.000. \"Estimado Cliente, a partir de los cierres de cartera que
+            se produzcan el 1 de Junio 2024 las comisiones de tarjetas de
+            credito seran las siguientes: Comisión Anual: $ 100.914 para la
+            Tarjeta Mastercard Regional / $114.103 para la Tarjeta Mastercard
+            Internacional/ $251.438 para la Tarjeta Mastercard Gold /$ 350.053
+            para la Tarjeta Mastercard Platinum/ $ 434.269 para la Tarjeta
+            Mastercard Black.-(incluye IVA). Comisión de Mantenimiento*: para
+            todas las tarjetas de crédito Black, Platinum, Gold, Internacional y
+            Regional la comisión de Mantenimiento será de $6.292.- (incluye
+            IVA). Comisión por Reposicion: para todas las tarjetas de crédito
+            Black, Platinum, Gold, Internacional y Regional la comisión de
+            reposicion por robo, extravio y/o hurto será de $15.488.- (incluye
+            IVA). *Los precios indicados no aplican a las Tarjetas de Crédito
+            que, por encontrarse dentro de un paquete vigente o por contar con
+            convenio especial de cobranding o convenio especial por acreditacion
+            de haberes, se encuentran bonificadas. Podrás optar por rescindir el
+            contrato en cualquier momento antes de la entrada en vigencia del
+            cambio y sin cargo alguno, sin perjuicio de que deberá cumplir con
+            las obligaciones pendientes a su cargo. Usted puede consultar el
+            Régimen de Transparencia elaborado por el Banco Central de la
+            República Argentina sobre la base de la información proporcionada
+            por los sujetos obligados a fin de comparar los costos,
+            características y requisitos de los productos y servicios
+            financieros Ingresando a:
+            http://www.bcra.gob.ar/BCRAyVos/Regimen_de_transparencia.asp Para
+            más información consulta las condiciones en www.bbva.com.ar, o bien
+            podes comunicarte con Línea BBVA al 0800-333-0303 de lunes a viernes
+            de 7:30 a 21 hs. o acercarte a cualquiera de nuestras sucursales.
+            Estimados clientes, les recordamos que, de acuerdo a lo normado por
+            el B.C.R.A, las personas no residentes no pueden acceder al mercado
+            de cambios y tampoco pueden realizar consumos en el exterior y/o en
+            moneda extranjera con sus trajetas de crédito. En el presente cierre
+            el pago mínimo se conforma por el 5% de los saldos financiados, los
+            consumos en 1 a 3 pagos y débitos automáticos cuotas 7ma a 12va
+            comisiones, intereses, seguro de vida, adelantos en efectivo,
+            excesos en el LC, pagos mínimos impagos anteriores e impuestos. A la
+            sumatoria de los conceptos detallados se le restan los reintegros
+            comprendidos en este resumen para la conformación final del monto
+            del pago mínimo. \"Estimado Cliente: Se procederá al bloqueo de las
+            tarjetas de crédito que cuenten con 5 días de atraso considerados
+            desde la fecha de vencimiento. Una vez efectuado el pago se
+            procederá a su rehabilitación.\" \"De acuerdo a lo estipulado por el
+            inc. ñ) de la ley 25.065 se encuentra prohibida la capitalización de
+            intereses. \" Informamos que, las bonificaciones y descuentos
+            ofrecidos, serán acreditado a los 60 días de efectuada la compra.
+            Los consumos en dólares de sus tarjetas de crédito podrán ser
+            cancelados en esa moneda extranjera o en pesos. Siendo aplicable
+            como maximo en este caso el tipo de cambio vendedor (aplicable para
+            operaciones efectuadas por ventanilla o a través de medios
+            electrónicos, según corresponda) del momento de cancelación-o día
+            habil inmediato anterior cuando el pago se efectúe un día inhábil.
+            Si hubiera pactado el débito automático del resumen de la tarjeta,
+            aplicará el tipo de cambio vendedor para operaciones efectuadas a
+            través de medios electrónicos de pago del cierre del mismo dia hábil
+            del pago. Una vez pasada la fecha de vencimiento, los saldos impagos
+            en moneda extranjera se convertirán a pesos aplicando el tipo del
+            cambio del día del vencimiento del resumen en el que se encuentren
+            incluídos. Cuando el titular de la cuenta se encuentre inhabilitado
+            por BCRA para operar en cambios o sea No Re sidente, los saldos
+            deudores en dólares solo podrán cancelarse en esa moneda, y los
+            saldos impagos n o serán convertidos a pesos. Existiendo saldo
+            acreedor en dólares, si no se cancela el saldo adeudado en pesos al
+            vencimiento, habrá compensación de saldos. El saldo acreedor en USD
+            cubrirá la deuda en pesos. Informamos que, las bonificaciones y
+            descuentos ofrecidos, serán acreditados hasta 60 días posterior es a
+            la fecha de cierre de liquidación.- Recordá que podes solicitar una
+            caja de ahorro en pesos con las prestaciones previstas de las normas
+            sobre depositos de ahorros, cuenta sueldo y especiales, las cuales
+            serán gratuitas. Canales alternativos, (Pago Fácil, Banelco, Pagos
+            Mis Cuentas, Link) Si usted efectuó su pago un día hábil hasta la
+            hora 23.59 será computado con la fecha de ese día Si la operación
+            fue efectuada un sábado, domingo o feriado, será computado con la
+            fecha del día hábil siguiente a la del pago Les recordamos que si Ud
+            realizara un pago en pesos para cancelar deuda en dólares por estos
+            Canales, aplicará el Tipo de Cambio Vendedor del día del vencimiento
+            de su resumen En el caso de que Ud. tenga Débito automático para el
+            pago del resumen de la tarjeta y efectúe el pago por estos canales
+            alternativos, deberá realizarlo con 48 hs hábiles mínimas de
+            anticipación al vencimiento de su tarjeta.
+        financing:
+          maxLength: 10000
+          type: string
+          description: >-
+            Términos y condiciones de tasas de interés de financiación e interés
+            punitorios.
+          example: >-
+            Tasas de interés de financiación en pesos: TNA 121,410%, TEA
+            217,004%, TEM 9,947%. Tasas de intereses punitorios en pesos: TNA
+            60,620%, TEA 80,507%, TEM 4,974%, TIP 0,166%. Los intereses de
+            financiación se calculan desde fecha de vencimiento de su resumen
+            anterior. Los intereses punitorios sobre pago mínimo impago se
+            calculan desde fecha de vencimiento de su resumen anterior. ** En
+            cumplimiento a la normativa BCRA \"A\" 7198, para saldos mayores a $
+            200.000,00, la tasa de interés de financiación en pesos a aplicar
+            sobre el excedente será: TNA 146,240%, TEA 295,906%, TEM 11,974%.
+            Siempre y cuando no haya consumos que totalicen U$S 200 o más en el
+            periodo actual (Normativa BCRA \"A\" 7559). En ese caso la tasa de
+            interés de financiación en pesos a aplicar será: TNA 146,240%, TEA
+            295,906%, TEM 11,974%. La tasa de interés punitorio en pesos a
+            aplicar: será: TNA 73,120%, TIP 0,200% ** ** USTED DISPONE DE 30
+            DIAS PARA CUESTIONAR SU RESUMEN DE CUENTA DESDE SU RECEPCION **.
+            Descripciones de tasas: TNA: Tasa Nominal Anual, TEA: Tasa Efectiva
+            Anual, TEM: Tasa Efectiva Mensual, TIP: Tasa Diaria de Interés
+            Punitorio, CFT: Costo Financiero Total
+        institutional:
+          maxLength: 10000
+          type: string
+          description: Términos y condiciones generales de la institución.
+          example: >-
+            Si usted contrato una cobertura MasterAssist recuerde que la misma
+            cuenta con una vigencia de un año y su renovación es automática. Ud.
+            tiene 10 días corridos desde la solicitud de cobertura para darla de
+            baja. Una vez superado este plazo, el socio podrá cancelar la
+            renovación automática, notificando esta decisión con anticipación a
+            la fecha de vencimiento.\" Centro de Atención exclusiva BlackLine:
+            0800-999-3297. Si Ud. se encuentra en el exterior comuníquese por
+            cobro revertido al +5411-4340-5656. Centro de Denuncias: CABA y
+            GBA.: (011) 4340-5700 - Interior del País: 0800-222-3475. Si desea
+            acceder a su resumen cuenta en formato digital o consultar otros
+            servicios, podrá hacerlo sin costo ingresando en
+            www.masterconsultas.com.ar Esta hoja fue fabricada 100% con fibra de
+            cana de azúcar, 0% fibra de árbol y 0% blanqueadores químicos, para
+            reducir la emisión de CO2 y cuidar el Medioambiente
+      description: >-
+        Los términos y condiciones garantizan que las partes comprendan sus
+        derechos y obligaciones contractuales.
+    Token:
+      type: object
+      properties:
+        previous:
+          minLength: 26
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Código que indica el registro anterior para el
+            criterio seleccionado.
+          example: ABC123DEF456GHI789J1K0
+        next:
+          minLength: 26
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br></br>Código que indica el siguiente
+            registro posible para el criterio seleccionado, cuando el campo Más
+            Indicador es “Y”.
+          example: 123DEF456GHI789J1K0ABC
+      description: Exclusivo VisionPLUS.
+    TransactionSummaryResponse:
+      type: object
+      properties:
+        monthsNumber:
+          type: string
+          description: >-
+            Exclusivo VisionPLUS. Número de meses para recuperar los registros
+            de transacciones.
+        recordsNumber:
+          maxLength: 3
+          type: string
+          description: Exclusivo VisionPLUS. Número de registros de transacciones.
+          example: '123'
+        hasMoreTransactionsAvailable:
+          maxLength: 3
+          type: boolean
+          description: >-
+            Exclusivo VisionPLUS. </br></br>Código que indica si hay más
+            registros en el archivo. </br></br>Valores: </br></br>false = No hay
+            más registros en el archivo; </br>true = Hay más registros en el
+            archivo.
+        details:
+          type: array
+          description: Detalle de las transacciones.
+          items:
+            $ref: '#/components/schemas/Detail'
+      description: Detalle de las transacciones.
+    UserSummaryResponse:
+      type: object
+      properties:
+        amount:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información sobre la cantidad Tamaño de la
+            lista: 5
+          items:
+            $ref: '#/components/schemas/DetailUser'
+        code:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información del código Tamaño de la lista:
+            6
+          items:
+            $ref: '#/components/schemas/DetailUser'
+        codeA:
+          type: array
+          description: >-
+            Exclusivo VisionPLUS.</br>Información del código A Tamaño de la
+            lista: 5
+          items:
+            $ref: '#/components/schemas/DetailUser'
+        date:
+          type: array
+          description: 'Exclusivo VisionPLUS.</br>Información de fecha Tamaño de la lista: 5'
+          items:
+            $ref: '#/components/schemas/DetailUser'
+      description: Exclusivo VisionPLUS.</br>Información del usuario.
+    YearToDate:
+      type: object
+      properties:
+        interest:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto de los intereses cobrados desde el
+            comienzo de este año calendario hasta el estado de cuenta
+            actual.</br>Monto: formato con decimales únicamente (por NOD).
+          example: '100'
+        lateCharge:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto de los cargos por pagos atrasados
+            cobrados desde el comienzo de este año calendario hasta el estado de
+            cuenta actual.</br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        overlimitCharge:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto de los cargos por exceder el límite
+            cobrados desde el comienzo de este año calendario hasta el presente
+            estado de cuenta.</br>Monto: formato con decimales únicamente (por
+            NOD).
+          example: '100'
+        priorInterest:
+          maxLength: 17
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Monto total de intereses en la cuenta
+            durante el año anterior.</br>Monto: formato con decimales únicamente
+            (por NOD).
+          example: '100'
+      description: Exclusivo VisionPLUS.</br>Información del pago del año hasta la fecha
+    MonthlySummarySubscribeRequest:
+      required:
+        - customer
+        - encryptionPassword
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        encryptionPassword:
+          type: string
+          description: >-
+            Contraseña con el que será cifrado el resumen en formato PDF enviado
+            por email.
+        foreignUse:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Indica si la actualización es para una
+            cuenta local o extranjera cuando no se proporciona
+            ORG.</br>Valores:</br></br>Espacio = Local;</br>0 = Local
+            (predeterminado);</br>1 = Extranjero;</br>2 = Ambos.
+          example: '0'
+        statementFlag:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Bandera de Estado de cuenta de la
+            Cuenta.</br>Valores:</br></br>En blanco = Declaración normal
+            (predeterminado)</br>0 = Código de retención de declaración definido
+            por el usuario 10</br>1–9 = Código de retención de declaración
+            definido por el usuario 1 a 9</br>I = declaración provisional</br>H
+            = Mantener declaración</br>R = Declaración devuelta</br>S =
+            Declaración de cierre de sesión</br>O = Estado de cuenta en
+            línea/solo archivado</br>U = Suprimir declaración; no generar</br>Z
+            = Valor definido por el usuario que suprime la declaración
+            generación.
+          example: Z
+    MonthlySummaryStatusRequest:
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        foreignUse:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Indica si la actualización es para una
+            cuenta local o extranjera cuando no se proporciona
+            ORG.</br>Valores:</br></br>Espacio = Local;</br>0 = Local
+            (predeterminado);</br>1 = Extranjero;</br>2 = Ambos.
+          example: '0'
+        statementFlag:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Bandera de Estado de cuenta de la
+            Cuenta.</br>Valores:</br></br>En blanco = Declaración normal
+            (predeterminado)</br>0 = Código de retención de declaración definido
+            por el usuario 10</br>1–9 = Código de retención de declaración
+            definido por el usuario 1 a 9</br>I = declaración provisional</br>H
+            = Mantener declaración</br>R = Declaración devuelta</br>S =
+            Declaración de cierre de sesión</br>O = Estado de cuenta en
+            línea/solo archivado</br>U = Suprimir declaración; no generar</br>Z
+            = Valor definido por el usuario que suprime la declaración
+            generación.
+          example: Z
+    MonthlySummaryStatusResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponse'
+        email:
+          type: string
+          description: >-
+            Este campo devuelve el email con el que está adherido al servicio de
+            resumen virtual
+          example: user@example.com
+    StatusResponse:
+      type: object
+      properties:
+        isRegistrated:
+          type: boolean
+          description: >-
+            Este campo indica si esta registrado en el servicio de resumen
+            electrónico
+          example: true
+        isSubscribed:
+          type: boolean
+          description: >-
+            Este campo indica si esta adherido/subscripto al servicio de resumen
+            electronico
+          example: true
+    MonthlySummaryPDFRequest:
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        statementDate:
+          maxLength: 8
+          minLength: 8
+          pattern: yyyy-MM-dd
+          type: string
+          description: >-
+            La fecha de cierre del resumen mensual. esta fecha debera tener el
+            formato yyyy-MM-dd.
+          example: '2024-05-20'
+    MonthlySummaryPDFResponse:
+      type: object
+      properties:
+        file:
+          type: string
+          description: >-
+            Este campo contiene un archivo en formato PDF codificado en base64.
+            La respuesta maxima del resumen no superara los 10MB
+          example: >-
+            JVBERi0xLjcNCiWhs8XXDQoxIDAgb2JqDQo8PC9QYWdlcyAyIDAgUiAvVHlwZS9DYXRhbG9nPj4NCmVuZG9iag0KMiAwIG9iag0KPDwvQ291bnQgMS9LaWRzWyA0IDAgUiBdL1R5cGUvUGFnZXM+Pg0KZW5kb2JqDQozIDAgb2JqDQo8PC9DcmVhdGlvbkRhdGUoRDoyMDI0MDgyNzEwMTk1OCkvQ3JlYXRvcihQREZpdW0pL1Byb2R1Y2VyKFBERml1bSk+Pg0KZW5kb2JqDQo0IDAgb2JqDQo8PC9BcnRCb3hbIDAgMCA1OTUuMjggODQxLjg5XS9CbGVlZEJveFsgMCAwIDU5NS4yOCA4NDEuODldL0NvbnRlbnRzIDUgMCBSIC9Hcm91cCA2IDAgUiAvTWVkaWFCb3hbIDAgMCA1OTUuMjggODQxLjg5XS9QYXJlbnQgMiAwIFIgL1Jlc291cmNlczw8L0V4dEdTdGF0ZTw8L0dTMCA3IDAgUiAvR1MxIDggMCBSIC9HUzIgOSAwIFIgL0dTMyAxMCAwIFIgL0dTNCAxMSAwIFIgPj4vRm9udDw8L1QxXzAgMTIgMCBSID4+L1Byb2NTZXRbL1BERi9UZXh0L0ltYWdlQ10vUHJvcGVydGllczw8L01DMCAxNSAwIFIgPj4vWE9iamVjdDw8L0ZtMCAxOCAwIFIgL0ZtMSAyMCAwIFIgL0ZtMTAgMjIgMCBSIC9GbTExIDQwIDAgUiAvRm0xMiA0NiAwIFIgL0ZtMTMgNTIgMCBSIC9GbTE0IDU4IDAgUiAvRm0xNSA2NCAwIFIgL0ZtMTYgNzAgMCBSIC9GbTE3IDc2IDAgUiAvRm0xOCA4MiAwIFIgL0ZtMTkgODggMCBSIC9GbTIgOTQgMCBSIC9GbTIwIDEwNyAwIFIgL0ZtMyAxMDkgMCBSIC9GbTQgMTExIDAgUiAvRm01IDEyNSAwIFIgL0ZtNiAxMzEgMCBSIC9GbTcgMTM3IDAgUiAvRm04IDE0MyAwIFIgL0ZtOSAxNDkgMCBSIC9JbTAgMTU1IDAgUiA+Pj4+L1RodW1iIDE1NyAwIFIgL1RyaW1Cb3hbIDAgMCA1OTUuMjggODQxLjg5XS9UeXBlL1BhZ2U+Pg0KZW5kb2JqDQo1IDAgb2JqDQo8PC9GaWx0ZXIvRmxhdGVEZWNvZGUvTGVuZ3RoIDcwMDA+PnN0cmVhbQ0KSImMV8uOJLcRvPdX1HF16Fom37xqZRuyIQuyxvbBMHxoWFpAMzZkA/LvOyKSrK4ZbQOLAXoYLD6SycyI5PtvP2zvv/kQti+/+rBdwh6KbfhNg785bWH76fL+d9+H7cf/XgJQGWWP3baebe9j+88/Lz9cfn7w5a/bv/TtR65gXOH9b1/C9tW/L9/9ut/e9MfZH73/O/SnPPaY6rGT9b6Pkw1zZ/+8Xd8aYrH0vYa+tWp7yxhRw9hzbVtP+6jpPLKmvcetlbiXXDHQOpbq28DA0h6eLS1b+fflE9xZc4EjS6E7i1X+pkKXPtk/wmbb0w+X1HarqW304WpbLXsqLW+5D8yGzU8vl7+9+/qP339h5d3Tn/784enrv3yR87tvv/j70+8vv3n6nPNPY9M0Nr9xeJ795UF/fdDfHvT3B/3jQb+9jYzjw9vQOD7ERx/Sow+PDm2PTm2Pjm2Pzm2PDm7z5LjoPSHqwt5zVoL9jEjg9dsWR99DR7gkNHLElNuLsuvlUvfUcatlbyNvlvfetuvYU8SkvFvrC90uOe+hHV9r2ONW9x6aN2PdK0L5dhHKdS+jbnNKjXuLeS040e3iu03odpSx2yhM+7TnwF2vbY9tcEFudTUEH4IfER1p9oTH5qvD6m7w8ZxMY6JccUNOf3dyTCp5z6PalkPBjNTvjgm7JVryzFarnACa2K4gMCQO2i2RzHDFN4xItphtT+rvfTUtZR8i0DhQo6Pdl4nZNCZqUNQ1Ws1sK8kt2mzfdNFsPV8+og17Cjjl5XLlKmnh54XDntPwQ4wT8G2zCDm1fLRzVk/XRmAVHUJk02Rtykd7ncsRHeFkRA8NrR4igcW5GC9sWYdlYztDgxEcDAJ+9mN58yO/lcKOgX8vk/0mNGiKLwP+PEDA4RBegjBDB3fK7CbPltW...
     DocumentAnnualRequest:
       type: object
       properties:
@@ -1267,7 +4813,9 @@ components:
           minLength: 64
           pattern: '[0-9A-F]{64}'
           type: string
-          description: Este campo de entrada permite ingresar el número de tarjeta (PAN) encriptado
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
           example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
         account:
           $ref: '#/components/schemas/AccountRequestOnlyTitular'
@@ -1278,8 +4826,11 @@ components:
           maxLength: 2147483646
           minLength: 1
           type: string
-          description: Contiene el Resumen electrónico en formato PDF codificado en base64 que contiene toda la información de la cuenta y tarjetas.
-          example: 'JVBERi0xLjcNCiWhs8XXDQoxIDAgb2JqDQo8PC9QYWdlcyAyIDAgUiAvVHlwZS9DYXRhbG9nPj4NCmVuZG9iag0KMiAwIG9iag0KPDwvQ291bnQgMS9LaWRzWyA0IDAgUiBdL1R5cGUvUGFnZXM... '
+          description: >-
+            Contiene el Resumen electrónico en formato PDF codificado en base64
+            que contiene toda la información de la cuenta y tarjetas.
+          example: >-
+            JVBERi0xLjcNCiWhs8XXDQoxIDAgb2JqDQo8PC9QYWdlcyAyIDAgUiAvVHlwZS9DYXRhbG9nPj4NCmVuZG9iag0KMiAwIG9iag0KPDwvQ291bnQgMS9LaWRzWyA0IDAgUiBdL1R5cGUvUGFnZXM... 
     TripLogRequest:
       type: object
       properties:
@@ -1288,13 +4839,18 @@ components:
           minLength: 32
           pattern: '[0-9A-F]{32}'
           type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
           example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
         additional:
           maxLength: 1
           minLength: 1
           type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valores posibles: 1 a 9. Titular: 0 Adicional: 1 a 9'
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valores
+            posibles: 1 a 9. Titular: 0 Adicional: 1 a 9
           format: int32
           example: 0
         cardNumber:
@@ -1302,7 +4858,9 @@ components:
           minLength: 64
           pattern: '[0-9A-F]{64}'
           type: string
-          description: Este campo de entrada permite ingresar el número de tarjeta (PAN) encriptado
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
           example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
       description: Estructura de campos para la solicitud de la API TripLog
     TripLogResponse:
@@ -1310,7 +4868,9 @@ components:
       properties:
         accountList:
           type: array
-          description: Este campo de salida, proporciona los datos del tarjetahabiente o los tarjetahabientes.
+          description: >-
+            Este campo de salida, proporciona los datos del tarjetahabiente o
+            los tarjetahabientes.
           items:
             $ref: '#/components/schemas/Account'
       description: Estructura de campos que responde a la API TripLog
@@ -1328,13 +4888,18 @@ components:
           minLength: 32
           pattern: '[0-9A-F]{32}'
           type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
           example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
         additional:
           maxLength: 1
           minLength: 1
           type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valores posibles: 1 a 9. Titular: 0 Adicional: 1 a 9'
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valores
+            posibles: 1 a 9. Titular: 0 Adicional: 1 a 9
           format: int32
           example: 0
         cardNumber:
@@ -1342,7 +4907,9 @@ components:
           minLength: 64
           pattern: '[0-9A-F]{64}'
           type: string
-          description: Este campo de entrada permite ingresar el número de tarjeta (PAN) encriptado
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
           example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
         requestNumber:
           maxLength: 6
@@ -1366,7 +4933,9 @@ components:
         newLimit:
           maxLength: 15
           type: integer
-          description: 'Monto del nuevo límite Numéricos enteros, miles, no admite negativos) Ej: 200000 / 150000'
+          description: >-
+            Monto del nuevo límite Numéricos enteros, miles, no admite
+            negativos) Ej: 200000 / 150000
           format: int32
           example: 500000
         deadline:
@@ -1382,13 +4951,17 @@ components:
           maxLength: 1
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el código de retorno / rechazo que devuelve el sistema.
+          description: >-
+            Este campo de salida proporciona el código de retorno / rechazo que
+            devuelve el sistema.
           example: '0'
         returnCodeDescription:
           maxLength: 25
           minLength: 25
           type: string
-          description: Este campo de salida proporciona la descripción del código de retorno / rechazo que devuelve el sistema.
+          description: >-
+            Este campo de salida proporciona la descripción del código de
+            retorno / rechazo que devuelve el sistema.
           example: NOVEDAD CARGADA CON ÉXITO
     CardsRequest:
       required:
@@ -1401,13 +4974,18 @@ components:
           minLength: 32
           pattern: ^[0-9A-F]{32}
           type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
           example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
         additional:
           maxLength: 1
           minLength: 1
           type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valores posibles: 1 a 9. Titular: 0 Adicional: 1 a 9'
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valores
+            posibles: 1 a 9. Titular: 0 Adicional: 1 a 9
           format: int32
           example: 0
       description: Estructura de campos para la solicitud de la API Reissue Card
@@ -1418,7 +4996,9 @@ components:
           maxLength: 16
           minLength: 16
           type: string
-          description: Este campo de salida, proporciona la información del número de tarjeta (PAN) enmascarado
+          description: >-
+            Este campo de salida, proporciona la información del número de
+            tarjeta (PAN) enmascarado
           example: '1234000000001234'
       description: Corresponde a un listado Tarjetas. Cada elemento es un elemento tarjeta
     CardsResponse:
@@ -1430,7 +5010,9 @@ components:
           maxItems: 10
           minItems: 10
           type: array
-          description: Corresponde a un listado Tarjetas. Cada elemento es un elemento tarjeta
+          description: >-
+            Corresponde a un listado Tarjetas. Cada elemento es un elemento
+            tarjeta
           items:
             $ref: '#/components/schemas/Card'
       description: Estructura de campos que responde la API Cards
@@ -1446,20 +5028,28 @@ components:
           minLength: 32
           pattern: ^[0-9A-F]{32}
           type: string
-          description: 'Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se encripta debe cumplir con Long 9 dígitos que se completan con ceros a la izquierda. EJ: 001234567 / 00#######'
+          description: >-
+            Número de cuenta del tarjetahabiente. Encriptado. La cuenta que se
+            encripta debe cumplir con Long 9 dígitos que se completan con ceros
+            a la izquierda. EJ: 001234567 / 00#######
           example: W23X24Y25Z26A1B2C3D4E5F6G7H8I9J1
         blockActivateCode:
           maxLength: 1
           minLength: 1
           pattern: 0|7
           type: string
-          description: Este campo de entrada, permite ingresar el motivo de boletín de bloqueo o activación. 0 - permite listar tarjetas para activar, 7 - permite listar tarjetas para denunciar.
+          description: >-
+            Este campo de entrada, permite ingresar el motivo de boletín de
+            bloqueo o activación. 0 - permite listar tarjetas para activar, 7 -
+            permite listar tarjetas para denunciar.
           example: '0'
         additional:
           maxLength: 1
           minLength: 1
           type: integer
-          description: 'Identifica Titulares y Adicionales de la misma cuenta. Valores posibles: 1 a 9. Titular: 0 Adicional: 1 a 9'
+          description: >-
+            Identifica Titulares y Adicionales de la misma cuenta. Valores
+            posibles: 1 a 9. Titular: 0 Adicional: 1 a 9
           format: int32
           example: 0
       description: Estructura de campos para la solicitud de la API Card Holders
@@ -1470,49 +5060,66 @@ components:
           maxLength: 1
           minLength: 1
           type: integer
-          description: Este campo de salida complementa al dato cuenta para identificar unívocamente titulares y adicionales de la misma. Conocido también como Autorizado.
+          description: >-
+            Este campo de salida complementa al dato cuenta para identificar
+            unívocamente titulares y adicionales de la misma. Conocido también
+            como Autorizado.
           format: int32
           example: 0
         fullName:
           maxLength: 30
           minLength: 1
           type: string
-          description: Este campo de salida proporciona la información del apellido y nombre del solicitante de la tarjeta de crédito.
+          description: >-
+            Este campo de salida proporciona la información del apellido y
+            nombre del solicitante de la tarjeta de crédito.
           example: BERTAZZINI,JORGE
         cardNumber:
           maxLength: 16
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el número de tarjeta enmascarado (1234000000001234).
+          description: >-
+            Este campo de salida proporciona el número de tarjeta enmascarado
+            (1234000000001234).
           example: '5505000000007223'
         isRenewal:
           maxLength: 1
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el información si el tarjetahabiente tiene la marca de renovación de tarjeta.
+          description: >-
+            Este campo de salida proporciona el información si el
+            tarjetahabiente tiene la marca de renovación de tarjeta.
           example: S
         desist:
           maxLength: 1
           minLength: 1
           type: string
-          description: Este campo de salida se relaciona con la renovación de la tarjeta y conlleva un SI/NO.
+          description: >-
+            Este campo de salida se relaciona con la renovación de la tarjeta y
+            conlleva un SI/NO.
           example: 'N'
         addressStreetNumber:
           maxLength: 30
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el domicilio del tarjetahabiente detallando el nombre y número de la calle.
+          description: >-
+            Este campo de salida proporciona el domicilio del tarjetahabiente
+            detallando el nombre y número de la calle.
           example: SIN DOMICILIO
         addressFloor:
           maxLength: 2
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el número de piso relacionado al domicilio
+          description: >-
+            Este campo de salida proporciona el número de piso relacionado al
+            domicilio
         addressApartment:
           maxLength: 3
           minLength: 1
           type: string
-          description: Este campo de salida proporciona el número de departamento relacionado al domicilio.
+          description: >-
+            Este campo de salida proporciona el número de departamento
+            relacionado al domicilio.
         countryCode:
           maxLength: 3
           minLength: 1
@@ -1534,14 +5141,18 @@ components:
           maxLength: 20
           minLength: 1
           type: string
-          description: Este campo de salida proporciona la ciudad relacionada con el domicilio.
+          description: >-
+            Este campo de salida proporciona la ciudad relacionada con el
+            domicilio.
       description: Corresponde a un listado. Cada elemento es un elemento tarjeta-cuenta
     CardHoldersResponse:
       type: object
       properties:
         cards:
           type: array
-          description: Corresponde a un listado. Cada elemento es un elemento tarjeta-cuenta
+          description: >-
+            Corresponde a un listado. Cada elemento es un elemento
+            tarjeta-cuenta
           items:
             $ref: '#/components/schemas/CardAccount'
       description: Estructura de campos que responde la API Card Holders
@@ -1552,13 +5163,55 @@ components:
           maxLength: 3
           minLength: 1
           type: integer
-          description: Este campo de salida, proporciona el código de retorno / rechazo que devuelve el sistema - Ver listado de códigos + descripciones  para la API correspondiente
+          description: >-
+            Este campo de salida, proporciona el código de retorno / rechazo que
+            devuelve el sistema - Ver listado de códigos + descripciones  para
+            la API correspondiente
           format: int32
           example: 1
         returnCodeDescription:
           maxLength: 200
           minLength: 1
           type: string
-          description: Este campo de salida, proporciona la descripción del código de retorno / rechazo que devuelve el sistema - Ver listado de códigos + descripciones  para la API correspondiente
+          description: >-
+            Este campo de salida, proporciona la descripción del código de
+            retorno / rechazo que devuelve el sistema - Ver listado de códigos +
+            descripciones  para la API correspondiente
           example: SISTEMA DISPONIBLE
       description: Estructura de campos que responde la API Availability
+    MonthlySummaryUnsubscribeRequest:
+      type: object
+      properties:
+        cardNumber:
+          pattern: '[0-9A-F]{64}'
+          type: string
+          description: >-
+            Este campo de entrada permite ingresar el número de tarjeta (PAN)
+            encriptado
+          example: C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26
+        account:
+          $ref: '#/components/schemas/AccountRequestOnlyTitular'
+        foreignUse:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Indica si la actualización es para una
+            cuenta local o extranjera cuando no se proporciona
+            ORG.</br>Valores:</br></br>Espacio = Local;</br>0 = Local
+            (predeterminado);</br>1 = Extranjero;</br>2 = Ambos.
+          example: '0'
+        statementFlag:
+          maxLength: 1
+          type: string
+          description: >-
+            Exclusivo VisionPLUS.</br>Bandera de Estado de cuenta de la
+            Cuenta.</br>Valores:</br></br>En blanco = Declaración normal
+            (predeterminado)</br>0 = Código de retención de declaración definido
+            por el usuario 10</br>1–9 = Código de retención de declaración
+            definido por el usuario 1 a 9</br>I = declaración provisional</br>H
+            = Mantener declaración</br>R = Declaración devuelta</br>S =
+            Declaración de cierre de sesión</br>O = Estado de cuenta en
+            línea/solo archivado</br>U = Suprimir declaración; no generar</br>Z
+            = Valor definido por el usuario que suprime la declaración
+            generación.
+          example: Z
